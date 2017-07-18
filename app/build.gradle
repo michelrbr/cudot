@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$project.rootDir/tools/script-git-version.gradle"
+
+def keyProperties = new Properties()
+try {
+    def propsFile = rootProject.file('keystore/keystore.properties')
+    keyProperties.load(new FileInputStream(propsFile))
+} catch (ignored) {
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "br.com.mxel.cuedot"
+        minSdkVersion 16
+        targetSdkVersion 26
+        //versionCode 1
+        //versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'android_debug_key'
+            keyPassword 'android'
+            storePassword 'android'
+            storeFile rootProject.file('keystore/debug.keystore')
+        }
+        release {
+            keyAlias keyProperties['keyAlias']
+            keyPassword keyProperties['keyPassword']
+            storePassword keyProperties['storePassword']
+            storeFile file(keyProperties['storeFile'])
+        }
+    }
+
+    productFlavors {
+        dev {
+            signingConfig signingConfigs.debug
+            versionCode gitVersionCodeTime
+            versionName gitVersionName
+            applicationId "br.com.mxel.cuedot.dev"
+        }
+        prod {
+            signingConfig signingConfigs.release
+            versionCode gitVersionCode
+            versionName gitVersionName
+            applicationId "br.com.mxel.cuedot"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), "$project.rootDir/tools/proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile "junit:junit:$junit_version"
+
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support.constraint:constraint-layout:$support_constraint_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
