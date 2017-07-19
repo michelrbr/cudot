@@ -1,0 +1,5 @@
+<FindBugsFilter>
+    <Bug pattern="SF_SWITCH_NO_DEFAULT" />
+    <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION" />
+</FindBugsFilter>
