@@ -3,7 +3,7 @@
     package="br.com.mxel.cuedot">
 
     <application
-        android:name="CueDotApplication"
+        android:name=".CueDotApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

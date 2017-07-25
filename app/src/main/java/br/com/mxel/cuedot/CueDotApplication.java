@@ -1,3 +1,5 @@
+package br.com.mxel.cuedot;
+
 import android.app.Application;
 import android.os.StrictMode;
 

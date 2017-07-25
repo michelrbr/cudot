@@ -1,1 +1,3 @@
-include ':app'
+include ':cuedot-app', ':cuedot-core'
+project(':cuedot-app').projectDir = new File('app')
+project(':cuedot-core').projectDir = new File('core-lib')
