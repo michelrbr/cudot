@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/macos,linux,android,intellij,androidstudio
 
 ### Android ###
@@ -261,5 +260,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Api properties
+
+api.properties
 
 # End of https://www.gitignore.io/api/macos,linux,android,intellij,androidstudio

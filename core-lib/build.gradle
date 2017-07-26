@@ -11,13 +11,19 @@ sourceSets {
     }
 }
 
-test {
-    testLogging.showStandardStreams = true
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat 'full'
+        showCauses true
+        showExceptions true
+        showStackTraces true
+        showStandardStreams true
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile "junit:junit:$junit_version"
+    testCompile "junit:junit:$junitVersion"
 
     // Network API
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"

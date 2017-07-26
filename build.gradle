@@ -2,14 +2,27 @@
 
 buildscript {
 
+    def apiProperties = new Properties()
+    try {
+        def apiPropsFile = rootProject.file('api.properties')
+        apiProperties.load(new FileInputStream(apiPropsFile))
+    } catch (ignored) {
+    }
+
     ext {
+
+        //Api Properties
+        apiUrl = apiProperties['apiURL']
+        apiVersion = apiProperties['apiVersion']
+        apiKey = apiProperties['apiKey']
+
         //Testing
-        junit_version = '4.12'
-        espresso_version = '2.2.2'
+        junitVersion = '4.12'
+        espressoVersion = '2.2.2'
 
         // Android
-        support_version = '26.+'
-        support_constraint_version = '1.0.2'
+        supportVersion = '26.+'
+        supportConstraintVersion = '1.0.2'
         butterknifeVersion = "8.4.0"
         okhttpVersion = "3.4.1"
         retrofitVersion = "2.3.0"

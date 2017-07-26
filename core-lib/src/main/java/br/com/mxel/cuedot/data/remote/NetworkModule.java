@@ -36,6 +36,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
+    public HttpUrl provideBaseUrl() {
+
+        return HttpUrl.parse(_baseUrl);
+    }
+
+    @Provides
+    @Singleton
     Converter.Factory provideGsonConverter() {
         return GsonConverterFactory.create();
     }
@@ -90,9 +97,12 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(Converter.Factory converterFactory, CallAdapter.Factory callAdapterFactory, OkHttpClient okHttpClient) {
+    public Retrofit provideRetrofit(HttpUrl baseUrl,
+                                    Converter.Factory converterFactory,
+                                    CallAdapter.Factory callAdapterFactory,
+                                    OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(_baseUrl)
+                .baseUrl(baseUrl)
                 .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(callAdapterFactory)
                 .client(okHttpClient)
