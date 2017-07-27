@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 apply from: "$project.rootDir/tools/script-git-version.gradle"
 apply from: "$project.rootDir/tools/script-findbugs.gradle"
 apply from: "$project.rootDir/tools/script-lint.gradle"
@@ -15,13 +16,16 @@ try {
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
+
     defaultConfig {
         applicationId "br.com.mxel.cuedot"
         minSdkVersion 16
         targetSdkVersion 26
-        //versionCode 1
-        //versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "THE_MOVIE_DB_API_KEY", '"API_KEY"'
+        buildConfigField "String", "THE_MOVIE_DB_API_URL", '"API_URL"'
+        buildConfigField "String", "THE_MOVIE_DB_API_VERSION", '"API_VERSION"'
     }
 
     signingConfigs {
@@ -65,7 +69,17 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    /* allow using java 8 lambda */
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
 }
+// Generated code is incompatible with Retrolambda
+/*retrolambda {
+    jvmArgs '-noverify'
+}*/
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -78,7 +92,20 @@ dependencies {
 
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support.constraint:constraint-layout:$support_constraint_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    // Network API
+    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    // RXJava
+    compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+
+    // Dependency injection
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    compile "com.google.dagger:dagger:$daggerVersion"
 }
 repositories {
     mavenCentral()
