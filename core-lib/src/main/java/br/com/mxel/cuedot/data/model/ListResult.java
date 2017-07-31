@@ -8,7 +8,7 @@ import java.util.List;
  * Created by michelribeiro on 26/07/17.
  */
 
-public class ApiResult {
+public class ListResult {
 
     public int page;
 

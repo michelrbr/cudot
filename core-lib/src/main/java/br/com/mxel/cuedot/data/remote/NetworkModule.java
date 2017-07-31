@@ -111,7 +111,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public CueDotApi provideMarvelApiService(Retrofit retrofit) {
-        return retrofit.create(CueDotApi.class);
+    public IRemoteDataSource provideMarvelApiService(Retrofit retrofit) {
+        return retrofit.create(IRemoteDataSource.class);
     }
 }

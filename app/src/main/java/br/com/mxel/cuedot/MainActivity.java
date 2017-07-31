@@ -2,12 +2,12 @@ package br.com.mxel.cuedot;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
 import br.com.mxel.cuedot.data.model.Movie;
-import br.com.mxel.cuedot.data.remote.CueDotApi;
+import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
+import br.com.mxel.cuedot.util.CueDotConstants;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -65,11 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build();
 
-        CueDotApi api = retrofit.create(CueDotApi.class);
+        IRemoteDataSource api = retrofit.create(IRemoteDataSource.class);
 
         api.getMoviesOrderBy(
-                CueDotApi.ORDER_BY_POPULAR).subscribe(
+                CueDotConstants.ORDER_BY_POPULAR).subscribe(
                 result -> {
+
+                    api.getMovie(result.results.get(0).id).subscribe(movie -> {
+                        System.out.println("Frist movie name: " + movie.title);
+                    });
 
                     for (Movie m : result.results) {
                         System.out.println(m.title);
