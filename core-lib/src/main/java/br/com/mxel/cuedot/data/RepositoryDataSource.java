@@ -19,9 +19,9 @@ public class RepositoryDataSource {
     private ILocalDataSource _localData;
 
     @Inject
-    public RepositoryDataSource(IRemoteDataSource remoteData, ILocalDataSource locaData) {
+    public RepositoryDataSource(IRemoteDataSource remoteData, ILocalDataSource localData) {
         _remoteData = remoteData;
-        _localData = locaData;
+        _localData = localData;
     }
 
     public Observable<ListResult> getFavoriteMoviesList() {

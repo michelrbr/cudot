@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -15,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -43,8 +45,14 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Converter.Factory provideGsonConverter() {
+    public Converter.Factory provideGsonConverter() {
         return GsonConverterFactory.create();
+    }
+
+    @Provides
+    @Singleton
+    public CallAdapter.Factory proviveCallAdapterFactory() {
+        return RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
     }
 
     @Singleton
@@ -58,7 +66,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named("insertKeyInterceptor")
-    Interceptor provideOkHttpInterceptor(){
+    public Interceptor provideOkHttpInterceptor(){
 
         return chain -> {
             Request originalRequest = chain.request();
@@ -77,7 +85,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(
+    public OkHttpClient provideOkHttpClient(
             HttpLoggingInterceptor loggingInterceptor,
             @Named("insertKeyInterceptor") Interceptor insertKeyInterceptor,
             @Named("isDebug") boolean isDebug) {
@@ -111,7 +119,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public IRemoteDataSource provideMarvelApiService(Retrofit retrofit) {
+    public IRemoteDataSource provideApiService(Retrofit retrofit) {
         return retrofit.create(IRemoteDataSource.class);
     }
 }
