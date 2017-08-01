@@ -116,9 +116,3 @@ dependencies {
 repositories {
     mavenCentral()
 }
-
-task printApi() {
-    println("Api url: $apiUrl")
-    println("Api version: $apiVersion")
-    println("Api key: $apiKey")
-}

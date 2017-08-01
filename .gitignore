@@ -122,8 +122,6 @@ obj/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
-# Keystore files
-
 # OS-specific files
 .DS_Store
 .DS_Store?
@@ -262,7 +260,6 @@ Temporary Items
 .apdisk
 
 # Api properties
-
 api.properties
 
 # End of https://www.gitignore.io/api/macos,linux,android,intellij,androidstudio

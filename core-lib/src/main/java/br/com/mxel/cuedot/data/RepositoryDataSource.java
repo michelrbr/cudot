@@ -43,6 +43,6 @@ public class RepositoryDataSource {
     public Observable<Movie> getMovie(long movieId) {
 
         // Check local data source before request remote one
-        return null;
+        return _remoteData.getMovie(movieId);
     }
 }

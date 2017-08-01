@@ -25,6 +25,9 @@ public class Movie {
     @SerializedName("poster_path")
     public String posterPath;
 
+    @SerializedName("backdrop_path")
+    public String backdropPath;
+
     @SerializedName("overview")
     public String synopsis;
 
