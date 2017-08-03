@@ -13,7 +13,7 @@ import br.com.mxel.cuedot.data.remote.NetworkModule;
 
 public class CueDotApplication extends Application {
 
-    private DataComponent _dataComponent;
+    private static DataComponent _dataComponent;
 
     @Override
     public void onCreate() {
@@ -50,7 +50,7 @@ public class CueDotApplication extends Application {
 
     // GETTER / SETTER ============================================================================
 
-    public DataComponent getDataComponent() {
+    public static DataComponent getDataComponent() {
         return _dataComponent;
     }
 }
