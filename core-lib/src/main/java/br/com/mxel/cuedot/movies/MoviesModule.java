@@ -11,7 +11,7 @@ import dagger.Provides;
 @Module
 public class MoviesModule {
 
-    private IMoviesView _movieView;
+    private final IMoviesView _movieView;
 
     public MoviesModule(IMoviesView movieView) {
         _movieView = movieView;

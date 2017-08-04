@@ -2,11 +2,13 @@ package br.com.mxel.cuedot.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by michelribeiro on 26/07/17.
  */
 
-public class Movie {
+public class Movie implements Serializable{
 
     /*
     original title

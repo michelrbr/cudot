@@ -1,0 +1,31 @@
+package br.com.mxel.cuedot.data.local;
+
+import br.com.mxel.cuedot.data.model.ListResult;
+import br.com.mxel.cuedot.data.model.Movie;
+import io.reactivex.Observable;
+
+/**
+ * Created by michelribeiro on 03/08/17.
+ */
+
+public class ConsoleLocalData implements ILocalDataSource {
+    @Override
+    public Observable<ListResult> getFavoriteMoviesList() {
+        return null;
+    }
+
+    @Override
+    public Observable<Movie> getMovie(long movieId) {
+        return null;
+    }
+
+    @Override
+    public void insertMovieToFavorites(Movie movie) throws Exception {
+
+    }
+
+    @Override
+    public void deleteMovieFromFavorite(long movieId) throws Exception {
+
+    }
+}

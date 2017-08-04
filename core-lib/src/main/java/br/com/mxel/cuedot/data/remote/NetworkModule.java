@@ -52,7 +52,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     public CallAdapter.Factory proviveCallAdapterFactory() {
-        return RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
+        return RxJava2CallAdapterFactory.createWithScheduler(Schedulers.newThread());
     }
 
     @Singleton
