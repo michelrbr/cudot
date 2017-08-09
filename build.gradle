@@ -22,7 +22,6 @@ buildscript {
 
         // Android
         supportVersion = '26.+'
-        supportConstraintVersion = '1.0.2'
         butterknifeVersion = "8.4.0"
         okhttpVersion = "3.4.1"
         retrofitVersion = "2.3.0"

@@ -1,5 +1,6 @@
 package br.com.mxel.cuedot.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
 import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.movieDetail.MovieDetailActivity;
 import br.com.mxel.cuedot.util.CueDotConstants;
 
 public class MoviesActivity extends AppCompatActivity implements IMoviesView{
@@ -59,6 +61,15 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
             strList += m.title + "\n";
         }
 
+
+        // Just to test Detail movie activity
+        final Movie movie = movies.get(0);
         ((TextView) findViewById(R.id.textList)).setText(strList);
+        findViewById(R.id.textList).setOnClickListener(view -> {
+            Intent intent = new Intent(MoviesActivity.this, MovieDetailActivity.class);
+            intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
+            startActivity(intent);
+        });
+
     }
 }

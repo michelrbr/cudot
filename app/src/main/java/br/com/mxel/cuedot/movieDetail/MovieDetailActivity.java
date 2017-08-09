@@ -2,7 +2,7 @@ package br.com.mxel.cuedot.movieDetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -34,6 +34,9 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void showMovie(Movie movie) {
-        Log.d(LOG_TAG, "Title: " + movie.title + "\nOverview: " + movie.synopsis);
+
+        setTitle(movie.title);
+
+        ((TextView) findViewById(R.id.text_description)).setText(movie.synopsis);
     }
 }

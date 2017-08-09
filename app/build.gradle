@@ -97,7 +97,6 @@ dependencies {
     testCompile "junit:junit:$junitVersion"
 
     compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support.constraint:constraint-layout:$supportConstraintVersion"
 
     // Network API
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
