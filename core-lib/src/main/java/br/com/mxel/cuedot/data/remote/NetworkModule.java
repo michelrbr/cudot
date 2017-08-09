@@ -5,9 +5,9 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -28,19 +28,11 @@ public class NetworkModule {
 
     private static final String API_QUERY = "api_key";
 
-    private final String _baseUrl;
-    private final String _apiKey;
-
-    public NetworkModule(String baseUrl, String apiKey) {
-        _baseUrl = baseUrl;
-        _apiKey = apiKey;
-    }
-
     @Provides
     @Singleton
-    public HttpUrl provideBaseUrl() {
+    public HttpUrl provideBaseUrl(@Named("baseUrl") String baseUrl) {
 
-        return HttpUrl.parse(_baseUrl);
+        return HttpUrl.parse(baseUrl);
     }
 
     @Provides
@@ -51,8 +43,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public CallAdapter.Factory proviveCallAdapterFactory() {
-        return RxJava2CallAdapterFactory.createWithScheduler(Schedulers.newThread());
+    public CallAdapter.Factory proviveCallAdapterFactory(ISchedulerProvider scheduler) {
+        return RxJava2CallAdapterFactory.createWithScheduler(scheduler.backgroundThread());
     }
 
     @Singleton
@@ -66,13 +58,13 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named("insertKeyInterceptor")
-    public Interceptor provideOkHttpInterceptor(){
+    public Interceptor provideOkHttpInterceptor(@Named("apiKey") String apiKey){
 
         return chain -> {
             Request originalRequest = chain.request();
             HttpUrl originalHttpUrl = originalRequest.url();
             HttpUrl newHttpUrl = originalHttpUrl.newBuilder()
-                    .setQueryParameter(API_QUERY, _apiKey)
+                    .setQueryParameter(API_QUERY, apiKey)
                     .build();
 
             Request newRequest = originalRequest.newBuilder()

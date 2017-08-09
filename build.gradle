@@ -27,6 +27,7 @@ buildscript {
         okhttpVersion = "3.4.1"
         retrofitVersion = "2.3.0"
         daggerVersion = "2.8"
+        rxAndroidVersion = "2.0.1"
 
         //Java
         rxjavaVersion = "2.1.2"

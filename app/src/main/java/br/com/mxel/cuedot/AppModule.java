@@ -1,11 +1,10 @@
 package br.com.mxel.cuedot;
 
-import android.app.Application;
-import android.content.Context;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import br.com.mxel.cuedot.util.AppSchedulerProvider;
+import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
 
@@ -15,21 +14,31 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private final Application _application;
-
-    public AppModule(Application application) {
-        this._application = application;
+    @Provides
+    @Named("baseUrl")
+    public String provideBaseUrl() {
+        return String.format(
+                "%s/%s/",
+                BuildConfig.THE_MOVIE_DB_API_URL,
+                BuildConfig.THE_MOVIE_DB_API_VERSION
+        );
     }
 
     @Provides
-    @Singleton
-    public Context provideContext() {
-        return _application;
+    @Named("apiKey")
+    public String provideApiKey() {
+        return BuildConfig.THE_MOVIE_DB_API_KEY;
     }
 
     @Provides
     @Named("isDebug")
     public boolean provideIsDebug() {
         return BuildConfig.DEBUG;
+    }
+
+    @Provides
+    @Singleton
+    public ISchedulerProvider provideScheluler() {
+        return new AppSchedulerProvider();
     }
 }
