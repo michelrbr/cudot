@@ -29,7 +29,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
         setContentView(R.layout.activity_movies);
 
         DaggerMoviesComponent.builder()
-                .dataComponent(CueDotApplication.getDataComponent())
+                .appComponent(CueDotApplication.getAppComponent())
                 .moviesModule(new MoviesModule(this))
                 .build()
                 .inject(this);

@@ -3,8 +3,6 @@ package br.com.mxel.cuedot;
 import android.app.Application;
 import android.os.StrictMode;
 
-import br.com.mxel.cuedot.data.DaggerDataComponent;
-import br.com.mxel.cuedot.data.DataComponent;
 
 /**
  * Created by michelribeiro on 18/07/17.
@@ -12,7 +10,7 @@ import br.com.mxel.cuedot.data.DataComponent;
 
 public class CueDotApplication extends Application {
 
-    private static DataComponent _dataComponent;
+    private static AppComponent _appComponent;
 
     @Override
     public void onCreate() {
@@ -35,14 +33,14 @@ public class CueDotApplication extends Application {
 
     private void initDagger(){
 
-        _dataComponent = DaggerDataComponent.builder()
+        _appComponent = DaggerAppComponent.builder()
                 .androidModule(new AndroidModule(this))
                 .build();
     }
 
     // GETTER / SETTER ============================================================================
 
-    public static DataComponent getDataComponent() {
-        return _dataComponent;
+    public static AppComponent getAppComponent() {
+        return _appComponent;
     }
 }

@@ -1,9 +1,8 @@
-package br.com.mxel.cuedot.data;
+package br.com.mxel.cuedot;
 
 import javax.inject.Singleton;
 
-import br.com.mxel.cuedot.AndroidModule;
-import br.com.mxel.cuedot.AppModule;
+import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.local.LocalDataModule;
 import br.com.mxel.cuedot.data.remote.NetworkModule;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
@@ -14,7 +13,7 @@ import dagger.Component;
  */
 @Singleton
 @Component( modules = {AndroidModule.class, AppModule.class, NetworkModule.class, LocalDataModule.class})
-public interface DataComponent {
+public interface AppComponent {
 
     RepositoryDataSource getRepository();
 
