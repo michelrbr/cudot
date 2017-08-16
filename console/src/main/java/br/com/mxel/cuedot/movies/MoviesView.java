@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.mxel.cuedot.data.DataComponent;
+import br.com.mxel.cuedot.ConsoleComponent;
 import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.util.CueDotConstants;
 
@@ -17,9 +17,10 @@ public class MoviesView implements IMoviesView {
     @Inject
     MoviesPresenter presenter;
 
-    public MoviesView(DataComponent dataComponent) {
+    public MoviesView(ConsoleComponent consoleComponent) {
+
         DaggerMoviesComponent.builder()
-                .dataComponent(dataComponent)
+                .consoleComponent(consoleComponent)
                 .moviesModule(new MoviesModule(this))
                 .build()
                 .inject(this);
@@ -29,17 +30,17 @@ public class MoviesView implements IMoviesView {
 
     @Override
     public void showLoading() {
-
+        System.out.println("Loading...\n");
     }
 
     @Override
     public void hideLoading() {
-
+        System.out.println("Loading complete\n");
     }
 
     @Override
-    public void showError() {
-        System.out.println("Cassildis Error!");
+    public void showError(Throwable throwable) {
+        System.out.println("Cassildis Error: " + throwable.getMessage());
     }
 
     @Override

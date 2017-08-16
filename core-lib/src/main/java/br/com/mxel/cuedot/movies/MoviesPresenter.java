@@ -26,10 +26,14 @@ public class MoviesPresenter {
 
     public void getMoviesOrderedBy(String order) {
 
+        _view.showLoading();
         _repository.getMoviesOrderBy(order)
                 .observeOn(_scheduler.mainThread())
                 .subscribe(
-                        listResult -> _view.showMoviesList(listResult.results),
+                        listResult -> {
+                            _view.hideLoading();
+                            _view.showMoviesList(listResult.results);
+                        },
                         throwable -> _view.showError(throwable));
     }
 }
