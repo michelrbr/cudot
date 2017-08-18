@@ -1,5 +1,7 @@
 package br.com.mxel.cuedot;
 
+import java.util.Scanner;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -34,12 +36,18 @@ public class ConsoleModule {
     @Provides
     @Named("isDebug")
     public boolean provideIsDebug() {
-        return true;
+        return false;
     }
 
     @Provides
     @Singleton
     public ISchedulerProvider provideScheluler() {
         return new ConsoleScheduleProvider();
+    }
+
+    @Provides
+    @Singleton
+    public Scanner provideScanner() {
+        return new Scanner(System.in);
     }
 }

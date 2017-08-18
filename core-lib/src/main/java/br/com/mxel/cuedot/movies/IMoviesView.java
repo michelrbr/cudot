@@ -12,6 +12,8 @@ public interface IMoviesView {
 
     void showLoading();
     void hideLoading();
+    void setEnableLoadMore(boolean enabled);
     void showError(Throwable throwable);
+    void hideError();
     void showMoviesList(List<Movie> movies);
 }

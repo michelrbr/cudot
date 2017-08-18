@@ -7,6 +7,9 @@ public class MainClass {
     public static void main(String[] args) {
 
         ConsoleComponent consoleComponent = DaggerConsoleComponent.builder().build();
-        new MoviesView(consoleComponent);
+        MoviesView movies = new MoviesView(consoleComponent);
+        while (!movies.getIsRunning()) {
+            movies.promptUser();
+        }
     }
 }

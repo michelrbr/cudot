@@ -1,5 +1,7 @@
 package br.com.mxel.cuedot;
 
+import java.util.Scanner;
+
 import javax.inject.Singleton;
 
 import br.com.mxel.cuedot.ConsoleModule;
@@ -19,4 +21,6 @@ public interface ConsoleComponent {
     RepositoryDataSource getRepository();
 
     ISchedulerProvider getScheduleProvider();
+
+    Scanner getScanner();
 }

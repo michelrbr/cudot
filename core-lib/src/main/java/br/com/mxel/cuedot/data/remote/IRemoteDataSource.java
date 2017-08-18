@@ -5,6 +5,7 @@ import br.com.mxel.cuedot.data.model.Movie;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by michelribeiro on 26/07/17.
@@ -13,7 +14,8 @@ import retrofit2.http.Path;
 public interface IRemoteDataSource {
 
     @GET("movie/{order_by}")
-    Observable<ListResult> getMoviesOrderBy(@Path("order_by") String orderBy);
+    Observable<ListResult> getMoviesOrderBy(@Path("order_by") String orderBy,
+                                            @Query("page") int page);
 
     @GET("movie/{movie_id}")
     Observable<Movie> getMovie(@Path("movie_id") long movieId);

@@ -36,8 +36,8 @@ public class RepositoryDataSource {
         _localData.deleteMovieFromFavorite(movieId);
     }
 
-    public Observable<ListResult> getMoviesOrderBy(String orderBy) {
-        return _remoteData.getMoviesOrderBy(orderBy);
+    public Observable<ListResult> getMoviesOrderBy(String orderBy, int page) {
+        return _remoteData.getMoviesOrderBy(orderBy, page);
     }
 
     public Observable<Movie> getMovie(long movieId) {

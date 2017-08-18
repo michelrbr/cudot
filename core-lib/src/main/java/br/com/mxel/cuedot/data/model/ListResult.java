@@ -13,10 +13,10 @@ public class ListResult {
     public int page;
 
     @SerializedName("total_results")
-    public long totalResults;
+    public int totalResults;
 
     @SerializedName("total_pages")
-    public long totalPages;
+    public int totalPages;
 
     public List<Movie> results;
 }
