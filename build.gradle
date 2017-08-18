@@ -15,21 +15,6 @@ buildscript {
         apiUrl = apiProperties['apiURL']
         apiVersion = apiProperties['apiVersion']
         apiKey = apiProperties['apiKey']
-
-        //Testing
-        junitVersion = '4.12'
-        espressoVersion = '2.2.2'
-
-        // Android
-        supportVersion = '26.+'
-        butterknifeVersion = "8.4.0"
-        okhttpVersion = "3.4.1"
-        retrofitVersion = "2.3.0"
-        daggerVersion = "2.8"
-        rxAndroidVersion = "2.0.1"
-
-        //Java
-        rxjavaVersion = "2.1.2"
     }
     repositories {
         jcenter()
@@ -50,3 +35,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: "./libraries.gradle"

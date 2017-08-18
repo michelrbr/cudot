@@ -1,0 +1,33 @@
+ext {
+    //Android
+    androidSupportVersion = '26.+'
+    rxAndroidVersion = "2.0.1"
+
+    //Testing
+    junitVersion = '4.12'
+    espressoVersion = '2.2.2'
+
+    //Java
+    rxjavaVersion = "2.1.2"
+    okhttpVersion = "3.4.1"
+    retrofitVersion = "2.3.0"
+    daggerVersion = "2.8"
+
+    libraries = [
+            appcompat : "com.android.support:appcompat-v7:$androidSupportVersion",
+            okhttp : "com.squareup.okhttp3:okhttp:$okhttpVersion",
+            okhttpLogging : "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+            retrofit : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitConverter : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            retrofitAdapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            dagger : "com.google.dagger:dagger:$daggerVersion",
+            daggerCompiler : "com.google.dagger:dagger-compiler:$daggerVersion",
+            rxjava : "io.reactivex.rxjava2:rxjava:$rxjavaVersion",
+            rxAndroid : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    ]
+
+    testLibraries = [
+            junit : "junit:junit:${junitVersion}",
+            espresso : "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    ]
+}

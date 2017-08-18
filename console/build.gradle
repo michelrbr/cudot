@@ -16,12 +16,12 @@ dependencies {
     compile fileTree(dir: 'build')
     compile project(':cuedot-core')
 
-    // Dependency injection
-    provided "com.google.dagger:dagger-compiler:$daggerVersion"
-    compile "com.google.dagger:dagger:$daggerVersion"
+// Dependency injection
+    compile rootProject.ext.libraries.dagger
+    provided rootProject.ext.libraries.daggerCompiler
 
     // RXJava
-    compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    compile rootProject.ext.libraries.rxjava
 }
 
 sourceCompatibility = "1.8"

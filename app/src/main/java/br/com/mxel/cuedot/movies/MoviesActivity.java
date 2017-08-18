@@ -48,8 +48,18 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     }
 
     @Override
+    public void setEnableLoadMore(boolean enabled) {
+
+    }
+
+    @Override
     public void showError(Throwable throwable) {
         Log.e(LOG_TAG, "Cassildis Error: " + throwable.getMessage());
+    }
+
+    @Override
+    public void hideError() {
+
     }
 
     @Override
