@@ -14,6 +14,7 @@ import dagger.Provides;
  * Created by michelribeiro on 03/08/17.
  */
 
+//@Module(subcomponents = MovieDetailComponent.class)
 @Module
 public class ConsoleModule {
 

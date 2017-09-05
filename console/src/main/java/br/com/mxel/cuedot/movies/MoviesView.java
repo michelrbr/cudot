@@ -6,7 +6,9 @@ import java.util.Scanner;
 import javax.inject.Inject;
 
 import br.com.mxel.cuedot.ConsoleComponent;
+import br.com.mxel.cuedot.MainClass;
 import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.movieDetail.MovieDetailView;
 import br.com.mxel.cuedot.util.CueDotConstants;
 
 /**
@@ -21,13 +23,15 @@ public class MoviesView implements IMoviesView {
     @Inject
     Scanner scanner;
 
+    private List<Movie> _movies;
+
     private boolean _isRunning = false;
     private boolean _canLoadMore = true;
 
-    public MoviesView(ConsoleComponent consoleComponent) {
+    public MoviesView() {
 
         DaggerMoviesComponent.builder()
-                .consoleComponent(consoleComponent)
+                .consoleComponent(MainClass.getConsoleComponent())
                 .moviesModule(new MoviesModule(this))
                 .build()
                 .inject(this);
@@ -53,8 +57,9 @@ public class MoviesView implements IMoviesView {
     @Override
     public void showMoviesList(List<Movie> movies) {
 
+        _movies = movies;
         int count = 0;
-        for (Movie m : movies) {
+        for (Movie m : _movies) {
             count++;
             System.out.println(String.valueOf(count) + ": " + m.title);
         }
@@ -87,6 +92,16 @@ public class MoviesView implements IMoviesView {
         } else if(query.equalsIgnoreCase("m") && _canLoadMore) {
             System.out.println("Loading more...\n");
             presenter.loadMore();
+        } else if(query.matches("\\d+")) {
+
+            int index = Integer.parseInt(query) - 1;
+            if (index >= 0 && index < _movies.size()) {
+
+                new MovieDetailView(_movies.get(index));
+            } else {
+                System.out.println("Please, enter a valid index");
+            }
+
         }
 
         return query;
