@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 import javax.inject.Inject;
 
-import br.com.mxel.cuedot.ConsoleComponent;
 import br.com.mxel.cuedot.MainClass;
 import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.movieDetail.MovieDetailView;
 import br.com.mxel.cuedot.util.CueDotConstants;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by michelribeiro on 03/08/17.
@@ -24,6 +25,7 @@ public class MoviesView implements IMoviesView {
     Scanner scanner;
 
     private List<Movie> _movies;
+    private PublishSubject<Movie> _notifyMovie = PublishSubject.create();
 
     private boolean _isRunning = false;
     private boolean _canLoadMore = true;
@@ -97,7 +99,7 @@ public class MoviesView implements IMoviesView {
             int index = Integer.parseInt(query) - 1;
             if (index >= 0 && index < _movies.size()) {
 
-                new MovieDetailView(_movies.get(index));
+                _notifyMovie.onNext(_movies.get(index));
             } else {
                 System.out.println("Please, enter a valid index");
             }
@@ -111,5 +113,9 @@ public class MoviesView implements IMoviesView {
 
     public boolean getIsRunning() {
         return _isRunning;
+    }
+
+    public Observable<Movie> getNotifyMovie() {
+        return _notifyMovie.hide();
     }
 }
