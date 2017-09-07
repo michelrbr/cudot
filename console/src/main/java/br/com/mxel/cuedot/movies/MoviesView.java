@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import br.com.mxel.cuedot.MainClass;
 import br.com.mxel.cuedot.data.model.Movie;
-import br.com.mxel.cuedot.movieDetail.MovieDetailView;
 import br.com.mxel.cuedot.util.CueDotConstants;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -34,9 +33,11 @@ public class MoviesView implements IMoviesView {
 
         DaggerMoviesComponent.builder()
                 .consoleComponent(MainClass.getConsoleComponent())
-                .moviesModule(new MoviesModule(this))
+                .moviesModule(new MoviesModule())
                 .build()
                 .inject(this);
+
+        presenter.bind(this);
 
         presenter.getMoviesOrderedBy(CueDotConstants.ORDER_BY_POPULAR);
     }
@@ -90,8 +91,11 @@ public class MoviesView implements IMoviesView {
 
         String query = scanner.nextLine();
         if (query.equalsIgnoreCase("q")) {
+
             _isRunning = true;
+            presenter.unbind();
         } else if(query.equalsIgnoreCase("m") && _canLoadMore) {
+
             System.out.println("Loading more...\n");
             presenter.loadMore();
         } else if(query.matches("\\d+")) {
