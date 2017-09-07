@@ -3,7 +3,6 @@ package br.com.mxel.cuedot.movieDetail;
 import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
-import io.reactivex.Observable;
 
 /**
  * Created by michelribeiro on 04/08/17.
@@ -14,7 +13,7 @@ public class MovieDetailPresenter {
     private RepositoryDataSource _repository;
     private ISchedulerProvider _scheduler;
     private Movie _movie;
-    private IMovieDetailView _movieDetailView;
+    private IMovieDetailView _view;
 
     public MovieDetailPresenter(RepositoryDataSource repository,
                                 ISchedulerProvider scheduler,
@@ -24,29 +23,55 @@ public class MovieDetailPresenter {
         _movie = movie;
     }
 
+    public void bind(IMovieDetailView movieDetailView) {
+        _view = movieDetailView;
+    }
+
+    public void unbind(){
+        _view = null;
+    }
+
     public void fetchMovieDetails() {
-        loadMovie()
+
+        if(_view != null) {
+            _view.hideMovieError();
+            _view.showMovieLoading(true);
+        }
+        _repository.getMovie(_movie.id)
+                .map(movie -> {
+                    _movie = movie;
+                    return _movie;
+                })
                 .observeOn(_scheduler.mainThread())
                 .subscribe(movie -> {
-                    if(_movieDetailView != null) {
-                        _movieDetailView.showMovie(_movie);
+                    if(_view != null) {
+                        _view.showMovieLoading(false);
+                        _view.showMovie(_movie);
+                    }
+                }, throwable -> {
+                    if (_view != null) {
+                        _view.showMovieError(throwable);
                     }
                 });
     }
 
-    private Observable<Movie> loadMovie(){
-        return _repository.getMovie(_movie.id)
-                .map(movie -> {
-                    _movie = movie;
-                    return _movie;
+    public void fetchMovieVideos() {
+        if(_view != null) {
+            _view.hideVideosError();
+            _view.showVideosLoading(true);
+        }
+        _repository.getMovieVideos(_movie.id)
+                .map(listVideoResult -> listVideoResult.results)
+                .subscribeOn(_scheduler.mainThread())
+                .subscribe( movieVideos -> {
+                    if(_view != null) {
+                        _view.showMovieLoading(false);
+                        _view.showVideos(movieVideos);
+                    }
+                }, throwable -> {
+                    if (_view != null) {
+                        _view.showVideosError(throwable);
+                    }
                 });
-    }
-
-    public void bind(IMovieDetailView movieDetailView) {
-        _movieDetailView = movieDetailView;
-    }
-
-    public void unbind(){
-        _movieDetailView = null;
     }
 }

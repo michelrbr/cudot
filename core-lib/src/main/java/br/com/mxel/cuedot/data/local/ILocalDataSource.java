@@ -1,6 +1,6 @@
 package br.com.mxel.cuedot.data.local;
 
-import br.com.mxel.cuedot.data.model.ListResult;
+import br.com.mxel.cuedot.data.model.ListMovieResult;
 import br.com.mxel.cuedot.data.model.Movie;
 import io.reactivex.Observable;
 
@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 
 public interface ILocalDataSource {
 
-    Observable<ListResult> getFavoriteMoviesList();
+    Observable<ListMovieResult> getFavoriteMoviesList();
     Observable<Movie> getMovie(long movieId);
     void insertMovieToFavorites(Movie movie) throws Exception;
     void deleteMovieFromFavorite(long movieId) throws Exception;

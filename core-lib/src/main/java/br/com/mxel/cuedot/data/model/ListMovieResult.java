@@ -8,7 +8,7 @@ import java.util.List;
  * Created by michelribeiro on 26/07/17.
  */
 
-public class ListResult {
+public class ListMovieResult {
 
     public int page;
 

@@ -4,7 +4,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import br.com.mxel.cuedot.data.local.ILocalDataSource;
-import br.com.mxel.cuedot.data.model.ListResult;
+import br.com.mxel.cuedot.data.model.ListMovieResult;
+import br.com.mxel.cuedot.data.model.ListVideoResult;
 import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
 import io.reactivex.Observable;
@@ -24,7 +25,7 @@ public class RepositoryDataSource {
         _localData = localData;
     }
 
-    public Observable<ListResult> getFavoriteMoviesList() {
+    public Observable<ListMovieResult> getFavoriteMoviesList() {
         return _localData.getFavoriteMoviesList();
     }
 
@@ -36,7 +37,7 @@ public class RepositoryDataSource {
         _localData.deleteMovieFromFavorite(movieId);
     }
 
-    public Observable<ListResult> getMoviesOrderBy(String orderBy, int page) {
+    public Observable<ListMovieResult> getMoviesOrderBy(String orderBy, int page) {
         return _remoteData.getMoviesOrderBy(orderBy, page);
     }
 
@@ -44,5 +45,15 @@ public class RepositoryDataSource {
 
         // Check local data source before request remote one
         return _remoteData.getMovie(movieId);
+    }
+
+    public Observable<ListVideoResult> getMovieVideos(long movieId) {
+
+        return _remoteData.getMovieVideos(movieId);
+    }
+
+    public Observable<ListMovieResult> getSimilarMovies(long movieId) {
+        
+        return _remoteData.getSimilarMovies(movieId);
     }
 }
