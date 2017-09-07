@@ -12,16 +12,10 @@ import dagger.Provides;
 @Module
 public class MoviesModule {
 
-    private final IMoviesView _movieView;
-
-    public MoviesModule(IMoviesView movieView) {
-        _movieView = movieView;
-    }
-
     @Provides
     public MoviesPresenter provideMoviesPresenter(RepositoryDataSource repository,
                                                   ISchedulerProvider scheduler) {
 
-        return new MoviesPresenter(repository, scheduler, _movieView);
+        return new MoviesPresenter(repository, scheduler);
     }
 }

@@ -27,27 +27,41 @@ public class MoviesPresenter {
 
     @Inject
     public MoviesPresenter(RepositoryDataSource repository,
-                           ISchedulerProvider scheduler,
-                           IMoviesView view) {
+                           ISchedulerProvider scheduler) {
         _repository = repository;
         _scheduler = scheduler;
-        _view = view;
         _movies = new ArrayList<>();
+    }
+
+    public void bind(IMoviesView moviesView) {
+        _view = moviesView;
+    }
+
+    public void unbind(){
+        _view = null;
     }
 
     public void getMoviesOrderedBy(String order) {
 
         _currentOrder = order;
         _currentPage = 1;
-        _view.setEnableLoadMore(true);
-        _view.showLoading();
+        if(_view != null) {
+            _view.setEnableLoadMore(true);
+            _view.showLoading();
+        }
         loadMovies().observeOn(_scheduler.mainThread())
                 .subscribe(
                         listResult -> {
-                            _view.hideLoading();
-                            _view.showMoviesList(listResult);
+                            if(_view != null) {
+                                _view.hideLoading();
+                                _view.showMoviesList(listResult);
+                            }
                         },
-                        throwable -> _view.showError(throwable));
+                        throwable -> {
+                            if(_view != null) {
+                                _view.showError(throwable);
+                            }
+                        });
     }
 
     public void loadMore(){
@@ -56,11 +70,19 @@ public class MoviesPresenter {
             loadMovies().observeOn(_scheduler.mainThread())
                     .subscribe(
                             listResult -> {
-                                _view.showMoviesList(listResult);
+                                if(_view != null) {
+                                    _view.showMoviesList(listResult);
+                                }
                             },
-                            throwable -> _view.showError(throwable));
+                            throwable -> {
+                                if(_view != null) {
+                                    _view.showError(throwable);
+                                }
+                            });
         } else {
-            _view.setEnableLoadMore(false);
+            if(_view != null) {
+                _view.setEnableLoadMore(false);
+            }
         }
     }
 
@@ -70,7 +92,7 @@ public class MoviesPresenter {
                     _currentPage = listResult.page;
                     _totalPages = listResult.totalPages;
                     _totalResults = listResult.totalResults;
-                    if (_currentPage >= _totalPages) {
+                    if (_view != null && _currentPage >= _totalPages) {
                         _view.setEnableLoadMore(false);
                     }
                     addMovies(listResult.results);

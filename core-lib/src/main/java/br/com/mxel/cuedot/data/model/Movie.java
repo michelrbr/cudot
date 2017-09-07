@@ -39,6 +39,10 @@ public class Movie implements Serializable{
     @SerializedName("release_date")
     public String releaseDate;
 
+    public String homepage;
+
+    public boolean video;
+
     /*public String getPosterPath() {
         return "https://image.tmdb.org/t/p/w342" + posterPath;
     }*/

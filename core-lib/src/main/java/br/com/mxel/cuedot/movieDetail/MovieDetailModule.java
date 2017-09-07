@@ -1,6 +1,8 @@
 package br.com.mxel.cuedot.movieDetail;
 
+import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
 
@@ -11,15 +13,14 @@ import dagger.Provides;
 public class MovieDetailModule {
 
     private final Movie _movie;
-    private final IMovieDetail _movieDetailView;
 
-    public MovieDetailModule(Movie movie, IMovieDetail movieDetailView) {
+    public MovieDetailModule(Movie movie) {
         _movie = movie;
-        _movieDetailView = movieDetailView;
     }
 
     @Provides
-    public MovieDetailPresenter provideMovieDetailPresenter() {
-        return new MovieDetailPresenter(_movie, _movieDetailView);
+    public MovieDetailPresenter provideMovieDetailPresenter(RepositoryDataSource repository,
+                                                            ISchedulerProvider scheduler) {
+        return new MovieDetailPresenter(repository, scheduler, _movie);
     }
 }
