@@ -30,9 +30,11 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
         DaggerMoviesComponent.builder()
                 .appComponent(CueDotApplication.getAppComponent())
-                .moviesModule(new MoviesModule(this))
+                .moviesModule(new MoviesModule())
                 .build()
                 .inject(this);
+
+        _presenter.bind(this);
 
         _presenter.getMoviesOrderedBy(CueDotConstants.ORDER_BY_POPULAR);
     }
