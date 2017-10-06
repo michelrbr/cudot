@@ -5,9 +5,32 @@ configurations {
     provided
 }
 
+// Generate class to hold API properties
+def generatedDir = file("$buildDir/generated/source/br/com/mxel/cuedot")
+task generateBuildConfigJava {
+
+    //def outputDir = file("$buildDir/../src/main/java/br/com/mxel/cuedot")
+    def javaClass =
+            'package br.com.mxel.cuedot;\n' +
+                    'public class BuildConfig {\n' +
+                    '\tpublic static String THE_MOVIE_DB_API_KEY = ' + rootProject.ext.apiKey + ';\n' +
+                    '\tpublic static String THE_MOVIE_DB_API_URL = ' + rootProject.ext.apiUrl + ';\n' +
+                    '\tpublic static String THE_MOVIE_DB_API_VERSION = ' + rootProject.ext.apiVersion + ';\n' +
+                    '}'
+
+    generatedDir.exists() || generatedDir.mkdirs()
+
+    new File(generatedDir, "BuildConfig.java").write(javaClass)
+}
+
+compileJava.dependsOn generateBuildConfigJava
+
 sourceSets {
     main {
         compileClasspath += configurations.provided
+        java {
+            srcDirs += generatedDir
+        }
     }
 }
 
@@ -16,7 +39,7 @@ dependencies {
     compile fileTree(dir: 'build')
     compile project(':cuedot-core')
 
-// Dependency injection
+    // Dependency injection
     compile rootProject.ext.libraries.dagger
     provided rootProject.ext.libraries.daggerCompiler
 
@@ -26,3 +49,4 @@ dependencies {
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
+

@@ -14,24 +14,24 @@ import dagger.Provides;
  * Created by michelribeiro on 03/08/17.
  */
 
-//@Module(subcomponents = MovieDetailComponent.class)
 @Module
 public class ConsoleModule {
 
     @Provides
     @Named("baseUrl")
     public String provideBaseUrl() {
+
         return String.format(
                 "%s/%s/",
-                "http://api.themoviedb.org",
-                "3"
+                BuildConfig.THE_MOVIE_DB_API_URL,
+                BuildConfig.THE_MOVIE_DB_API_VERSION
         );
     }
 
     @Provides
     @Named("apiKey")
     public String provideApiKey() {
-        return "YOUR_KEY";
+        return BuildConfig.THE_MOVIE_DB_API_KEY;
     }
 
     @Provides
