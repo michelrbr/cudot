@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 import javax.inject.Inject;
 
-import br.com.mxel.cuedot.data.model.Movie;
-import br.com.mxel.cuedot.data.model.MovieVideo;
+import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.model.IMovieVideo;
+
 
 /**
  * Created by michelribeiro on 18/08/17.
@@ -21,7 +22,7 @@ public class MovieDetailView implements IMovieDetailView {
     MovieDetailPresenter presenter;
 
     private boolean _shouldFinish = false;
-    private Movie _movie;
+    private IMovie _movie;
 
     public MovieDetailView(MovieDetailComponent component) {
 
@@ -42,13 +43,15 @@ public class MovieDetailView implements IMovieDetailView {
     }
 
     @Override
-    public void showMovie(Movie movie) {
+    public void showMovie(IMovie movie) {
 
         _movie = movie;
 
-        System.out.println("Name: " + _movie.title);
-        System.out.println("Rate: " + _movie.rating);
-        System.out.println("Synopsis: " + _movie.synopsis);
+        System.out.println("Name: " + _movie.getTitle());
+        System.out.println("Rate: " + _movie.getRating());
+        System.out.println("Synopsis: " + _movie.getSynopsis());
+        System.out.println("Poster: " + _movie.getPosterPath());
+        System.out.println("Backdrop: " + _movie.getBackdropPath());
     }
 
     @Override
@@ -71,16 +74,16 @@ public class MovieDetailView implements IMovieDetailView {
     }
 
     @Override
-    public void showVideos(List<MovieVideo> movieVideos) {
+    public void showVideos(List<? extends IMovieVideo> movieVideos) {
         int count = 0;
 
         if(movieVideos.size() > 0) {
-            for (MovieVideo mv : movieVideos) {
+            for (IMovieVideo mv : movieVideos) {
                 count++;
-                System.out.println(String.valueOf(count) + ": " + mv.name);
+                System.out.println(String.valueOf(count) + ": " + mv.getName());
             }
         } else {
-            System.out.println("There are no video for : " + _movie.title + "\n");
+            System.out.println("There are no video for : " + _movie.getTitle() + "\n");
         }
     }
 

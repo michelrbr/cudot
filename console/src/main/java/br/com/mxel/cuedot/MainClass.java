@@ -1,6 +1,6 @@
 package br.com.mxel.cuedot;
 
-import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.movieDetail.DaggerMovieDetailComponent;
 import br.com.mxel.cuedot.movieDetail.MovieDetailComponent;
 import br.com.mxel.cuedot.movieDetail.MovieDetailModule;
@@ -18,9 +18,9 @@ public class MainClass {
 
         _consoleComponent = DaggerConsoleComponent.builder().build();
         MoviesView movies = new MoviesView();
-        Disposable disposable = movies.getNotifyMovie().subscribe(new Consumer<Movie>() {
+        Disposable disposable = movies.getNotifyMovie().subscribe(new Consumer<IMovie>() {
             @Override
-            public void accept(Movie movie) throws Exception {
+            public void accept(IMovie movie) throws Exception {
 
                 MovieDetailComponent movieDetailComponent = DaggerMovieDetailComponent.builder()
                     .consoleComponent(MainClass.getConsoleComponent())
