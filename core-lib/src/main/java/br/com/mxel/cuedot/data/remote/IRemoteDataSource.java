@@ -1,8 +1,8 @@
 package br.com.mxel.cuedot.data.remote;
 
-import br.com.mxel.cuedot.data.model.ListMovieResult;
-import br.com.mxel.cuedot.data.model.ListVideoResult;
-import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
+import br.com.mxel.cuedot.data.remote.model.ListVideoResult;
+import br.com.mxel.cuedot.data.remote.model.Movie;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

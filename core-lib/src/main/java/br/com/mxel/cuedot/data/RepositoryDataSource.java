@@ -1,13 +1,16 @@
 package br.com.mxel.cuedot.data;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import br.com.mxel.cuedot.data.local.ILocalDataSource;
-import br.com.mxel.cuedot.data.model.ListMovieResult;
-import br.com.mxel.cuedot.data.model.ListVideoResult;
-import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
+import br.com.mxel.cuedot.data.remote.model.ListVideoResult;
 import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
+import br.com.mxel.cuedot.data.remote.model.Movie;
 import io.reactivex.Observable;
 
 /**
@@ -25,11 +28,11 @@ public class RepositoryDataSource {
         _localData = localData;
     }
 
-    public Observable<ListMovieResult> getFavoriteMoviesList() {
+    public Observable<List<IMovie>> getFavoriteMoviesList() {
         return _localData.getFavoriteMoviesList();
     }
 
-    public void insertMovieToFavorites(Movie movie) throws Exception {
+    public void insertMovieToFavorites(IMovie movie) throws Exception {
         _localData.insertMovieToFavorites(movie);
     }
 

@@ -1,4 +1,4 @@
-package br.com.mxel.cuedot.data.model;
+package br.com.mxel.cuedot.data.remote.model;
 
 import com.google.gson.annotations.SerializedName;
 

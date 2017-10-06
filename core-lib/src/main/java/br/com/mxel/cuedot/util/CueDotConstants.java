@@ -8,7 +8,7 @@ public final class CueDotConstants {
 
     public final static String ORDER_BY_POPULAR = "popular";
     public final static String ORDER_BY_TOP_RATED = "top_rated";
-    public final static String IMAGES_BASE_PATH = "https://image.tmdb.org/t/p/";
+    public final static String IMAGES_BASE_PATH = "https://image.tmdb.org/t/p";
     public final static String POSTER_SIZE = "w342";
     public final static String BACKDROP_SIZE = "w780";
 }
@@ -82,7 +82,7 @@ https://api.themoviedb.org/3/configuration?api_key=
     "images",
     "imdb_id",
     "languages",
-    "name",
+    "_name",
     "network",
     "origin_country",
     "original_name",
@@ -107,7 +107,7 @@ https://api.themoviedb.org/3/configuration?api_key=
     "translations",
     "tvdb_id",
     "tvrage_id",
-    "type",
+    "_type",
     "video",
     "videos"
   ]

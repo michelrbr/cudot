@@ -1,7 +1,10 @@
 package br.com.mxel.cuedot.movieDetail;
 
+import java.util.List;
+
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.model.IMovieVideo;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 
 /**
@@ -12,12 +15,13 @@ public class MovieDetailPresenter {
 
     private RepositoryDataSource _repository;
     private ISchedulerProvider _scheduler;
-    private Movie _movie;
+    private IMovie _movie;
+    private List<IMovieVideo> _movieVideos;
     private IMovieDetailView _view;
 
     public MovieDetailPresenter(RepositoryDataSource repository,
                                 ISchedulerProvider scheduler,
-                                Movie movie) {
+                                IMovie movie) {
         _repository = repository;
         _scheduler = scheduler;
         _movie = movie;
@@ -37,7 +41,7 @@ public class MovieDetailPresenter {
             _view.hideMovieError();
             _view.showMovieLoading(true);
         }
-        _repository.getMovie(_movie.id)
+        _repository.getMovie(_movie.getId())
                 .map(movie -> {
                     _movie = movie;
                     return _movie;
@@ -60,7 +64,7 @@ public class MovieDetailPresenter {
             _view.hideVideosError();
             _view.showVideosLoading(true);
         }
-        _repository.getMovieVideos(_movie.id)
+        _repository.getMovieVideos(_movie.getId())
                 .map(listVideoResult -> listVideoResult.results)
                 .subscribeOn(_scheduler.mainThread())
                 .subscribe( movieVideos -> {

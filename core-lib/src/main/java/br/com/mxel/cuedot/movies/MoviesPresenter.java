@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 import io.reactivex.Observable;
 
@@ -19,7 +19,7 @@ public class MoviesPresenter {
     private RepositoryDataSource _repository;
     private ISchedulerProvider _scheduler;
     private IMoviesView _view;
-    private List<Movie> _movies;
+    private List<IMovie> _movies;
     private String _currentOrder;
     private int _currentPage;
     private int _totalPages;
@@ -86,7 +86,7 @@ public class MoviesPresenter {
         }
     }
 
-    private Observable<List<Movie>> loadMovies(){
+    private Observable<List<IMovie>> loadMovies(){
         return _repository.getMoviesOrderBy(_currentOrder, _currentPage)
                 .map(listResult -> {
                     _currentPage = listResult.page;
@@ -100,7 +100,7 @@ public class MoviesPresenter {
                 });
     }
 
-    private void addMovies(List<Movie> movies){
+    private void addMovies(List<? extends IMovie> movies){
         _movies.addAll(movies);
     }
 }
