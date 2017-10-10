@@ -15,7 +15,7 @@ try {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         applicationId "br.com.mxel.cuedot"
@@ -48,13 +48,20 @@ android {
             signingConfig signingConfigs.debug
             versionCode gitVersionCodeTime
             versionName gitVersionName
-            applicationId "br.com.mxel.cuedot.dev"
+            applicationIdSuffix ".dev"
         }
         prod {
             signingConfig signingConfigs.release
             versionCode gitVersionCode
             versionName gitVersionName
-            applicationId "br.com.mxel.cuedot"
+        }
+    }
+
+    // Remove devRelease as it's not needed.
+    android.variantFilter { variant ->
+        if(variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('dev')) {
+            variant.setIgnore(true);
         }
     }
 
@@ -82,15 +89,12 @@ android {
         }
     }
 }
-// Generated code is incompatible with Retrolambda
-/*retrolambda {
-    jvmArgs '-noverify'
-}*/
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':cuedot-core')
 
+    // Test
     androidTestCompile(rootProject.ext.testLibraries.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

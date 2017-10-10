@@ -10,8 +10,9 @@ import javax.inject.Inject;
 
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
-import br.com.mxel.cuedot.data.model.Movie;
-import br.com.mxel.cuedot.data.model.MovieVideo;
+import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.model.IMovieVideo;
+import br.com.mxel.cuedot.data.remote.model.Movie;
 
 public class MovieDetailActivity extends AppCompatActivity implements IMovieDetailView {
 
@@ -44,11 +45,11 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     @Override
-    public void showMovie(Movie movie) {
+    public void showMovie(IMovie movie) {
 
-        setTitle(movie.title);
+        setTitle(movie.getTitle());
 
-        ((TextView) findViewById(R.id.text_description)).setText(movie.synopsis);
+        ((TextView) findViewById(R.id.text_description)).setText(movie.getSynopsis());
     }
 
     @Override
@@ -67,7 +68,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     @Override
-    public void showVideos(List<MovieVideo> movieVideos) {
+    public void showVideos(List<? extends IMovieVideo> movieVideos) {
 
     }
 

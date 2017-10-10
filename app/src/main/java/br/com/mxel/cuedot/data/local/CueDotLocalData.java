@@ -1,7 +1,8 @@
 package br.com.mxel.cuedot.data.local;
 
-import br.com.mxel.cuedot.data.model.ListMovieResult;
-import br.com.mxel.cuedot.data.model.Movie;
+import java.util.List;
+
+import br.com.mxel.cuedot.data.model.IMovie;
 import io.reactivex.Observable;
 
 /**
@@ -11,17 +12,17 @@ import io.reactivex.Observable;
 public class CueDotLocalData implements ILocalDataSource {
 
     @Override
-    public Observable<ListMovieResult> getFavoriteMoviesList() {
+    public Observable<List<IMovie>> getFavoriteMoviesList() {
         return null;
     }
 
     @Override
-    public Observable<Movie> getMovie(long movieId) {
+    public Observable<IMovie> getMovie(long movieId) {
         return null;
     }
 
     @Override
-    public void insertMovieToFavorites(Movie movie) throws Exception {
+    public void insertMovieToFavorites(IMovie movie) throws Exception {
 
     }
 

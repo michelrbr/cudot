@@ -12,7 +12,8 @@ import javax.inject.Inject;
 
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
-import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.remote.model.Movie;
 import br.com.mxel.cuedot.movieDetail.MovieDetailActivity;
 import br.com.mxel.cuedot.util.CueDotConstants;
 
@@ -65,21 +66,21 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     }
 
     @Override
-    public void showMoviesList(List<Movie> movies) {
+    public void showMoviesList(List<IMovie> movies) {
 
         String strList = "MOVIES LIST\n\n";
-        for (Movie m : movies) {
-            Log.d(LOG_TAG, m.title);
-            strList += m.title + "\n";
+        for (IMovie m : movies) {
+            Log.d(LOG_TAG, m.getTitle());
+            strList += m.getTitle() + "\n";
         }
 
 
         // Just to test Detail movie activity
-        final Movie movie = movies.get(0);
+        final IMovie movie = movies.get(0);
         ((TextView) findViewById(R.id.textList)).setText(strList);
         findViewById(R.id.textList).setOnClickListener(view -> {
             Intent intent = new Intent(MoviesActivity.this, MovieDetailActivity.class);
-            intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
+            intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, (Movie)movie);
             startActivity(intent);
         });
 

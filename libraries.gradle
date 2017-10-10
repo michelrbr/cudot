@@ -1,6 +1,6 @@
 ext {
     //Android
-    androidSupportVersion = '26.+'
+    androidSupportVersion = '26.1.0'
     rxAndroidVersion = "2.0.1"
 
     //Testing
