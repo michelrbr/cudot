@@ -23,7 +23,10 @@ tasks.withType(Test) {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Testing
     testCompile rootProject.ext.testLibraries.junit
+    testCompile rootProject.ext.testLibraries.mockito
 
     // Network API
     compile rootProject.ext.libraries.okhttp

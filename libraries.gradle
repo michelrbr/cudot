@@ -6,6 +6,7 @@ ext {
     //Testing
     junitVersion = '4.12'
     espressoVersion = '2.2.2'
+    mockitoVersion = '2.10.0'
 
     //Java
     rxjavaVersion = "2.1.2"
@@ -27,7 +28,8 @@ ext {
     ]
 
     testLibraries = [
-            junit : "junit:junit:${junitVersion}",
+            junit : "junit:junit:$junitVersion",
+            mockito : "org.mockito:mockito-core:$mockitoVersion",
             espresso : "com.android.support.test.espresso:espresso-core:$espressoVersion"
     ]
 }
