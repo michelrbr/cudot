@@ -1,13 +1,11 @@
 package br.com.mxel.cuedot;
 
-import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.movieDetail.DaggerMovieDetailComponent;
 import br.com.mxel.cuedot.movieDetail.MovieDetailComponent;
 import br.com.mxel.cuedot.movieDetail.MovieDetailModule;
 import br.com.mxel.cuedot.movieDetail.MovieDetailView;
 import br.com.mxel.cuedot.movies.MoviesView;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class MainClass {
 
@@ -18,16 +16,13 @@ public class MainClass {
 
         _consoleComponent = DaggerConsoleComponent.builder().build();
         MoviesView movies = new MoviesView();
-        Disposable disposable = movies.getNotifyMovie().subscribe(new Consumer<IMovie>() {
-            @Override
-            public void accept(IMovie movie) throws Exception {
+        Disposable disposable = movies.getNotifyMovie().subscribe(movie -> {
 
-                MovieDetailComponent movieDetailComponent = DaggerMovieDetailComponent.builder()
-                    .consoleComponent(MainClass.getConsoleComponent())
-                    .movieDetailModule(new MovieDetailModule(movie))
-                    .build();
-                _movieDetailView = new MovieDetailView(movieDetailComponent);
-            }
+            MovieDetailComponent movieDetailComponent = DaggerMovieDetailComponent.builder()
+                .consoleComponent(MainClass.getConsoleComponent())
+                .movieDetailModule(new MovieDetailModule(movie))
+                .build();
+            _movieDetailView = new MovieDetailView(movieDetailComponent);
         });
         while (!movies.getIsRunning()) {
 

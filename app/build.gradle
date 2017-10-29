@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 apply from: "$project.rootDir/tools/script-git-version.gradle"
 apply from: "$project.rootDir/tools/script-findbugs.gradle"
 apply from: "$project.rootDir/tools/script-lint.gradle"
@@ -15,12 +13,14 @@ try {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
+    flavorDimensions "default"
 
     defaultConfig {
         applicationId "br.com.mxel.cuedot"
         minSdkVersion 16
         targetSdkVersion 26
+        versionName gitVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "THE_MOVIE_DB_API_KEY", rootProject.ext.apiKey
@@ -47,13 +47,13 @@ android {
         dev {
             signingConfig signingConfigs.debug
             versionCode gitVersionCodeTime
-            versionName gitVersionName
             applicationIdSuffix ".dev"
+            dimension "default"
         }
         prod {
             signingConfig signingConfigs.release
             versionCode gitVersionCode
-            versionName gitVersionName
+            dimension "default"
         }
     }
 
@@ -102,12 +102,13 @@ dependencies {
     compile rootProject.ext.libraries.appcompat
 
     // Dependency injection
-    apt rootProject.ext.libraries.dagger
-    provided rootProject.ext.libraries.daggerCompiler
+    compile rootProject.ext.libraries.dagger
+    annotationProcessor rootProject.ext.libraries.daggerCompiler
 
     // RX
     compile rootProject.ext.libraries.rxAndroid
 }
 repositories {
     mavenCentral()
+    google()
 }

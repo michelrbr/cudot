@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
 
 configurations {
     provided
@@ -9,7 +8,6 @@ configurations {
 def generatedDir = file("$buildDir/generated/source/br/com/mxel/cuedot")
 task generateBuildConfigJava {
 
-    //def outputDir = file("$buildDir/../src/main/java/br/com/mxel/cuedot")
     def javaClass =
             'package br.com.mxel.cuedot;\n' +
                     'public class BuildConfig {\n' +
