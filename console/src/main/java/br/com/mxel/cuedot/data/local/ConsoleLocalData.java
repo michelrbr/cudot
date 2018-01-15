@@ -26,7 +26,7 @@ public class ConsoleLocalData implements ILocalDataSource {
     }
 
     @Override
-    public void deleteMovieFromFavorite(long movieId) throws Exception {
+    public void removeMovieFromFavorite(long movieId) throws Exception {
 
     }
 }

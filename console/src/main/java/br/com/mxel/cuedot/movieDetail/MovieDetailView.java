@@ -97,6 +97,16 @@ public class MovieDetailView implements IMovieDetailView {
 
     }
 
+    @Override
+    public void markAsFavorite() {
+
+    }
+
+    @Override
+    public void unmarkAsFavorite() {
+
+    }
+
 
     public void promptUser() {
         String options = "\nPlease choose an option\n";
