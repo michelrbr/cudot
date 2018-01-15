@@ -14,5 +14,5 @@ public interface ILocalDataSource {
     Observable<List<IMovie>> getFavoriteMoviesList();
     Observable<IMovie> getMovie(long movieId);
     void insertMovieToFavorites(IMovie movie) throws Exception;
-    void deleteMovieFromFavorite(long movieId) throws Exception;
+    void removeMovieFromFavorite(long movieId) throws Exception;
 }

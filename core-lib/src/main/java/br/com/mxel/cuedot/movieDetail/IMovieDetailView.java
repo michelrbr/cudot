@@ -26,4 +26,8 @@ public interface IMovieDetailView {
     void showVideosError(Throwable error);
 
     void hideVideosError();
+
+    void markAsFavorite();
+
+    void unmarkAsFavorite();
 }

@@ -32,12 +32,12 @@ public class RepositoryDataSource {
         return _localData.getFavoriteMoviesList();
     }
 
-    public void insertMovieToFavorites(IMovie movie) throws Exception {
+    public void addMovieToFavorites(IMovie movie) throws Exception {
         _localData.insertMovieToFavorites(movie);
     }
 
-    public void deleteMovieFromFavorite(long movieId) throws Exception {
-        _localData.deleteMovieFromFavorite(movieId);
+    public void removeMovieFromFavorites(long movieId) throws Exception {
+        _localData.removeMovieFromFavorite(movieId);
     }
 
     public Observable<ListMovieResult> getMoviesOrderBy(String orderBy, int page) {

@@ -78,4 +78,24 @@ public class MovieDetailPresenter {
                     }
                 });
     }
+
+    public void addToFavorites() {
+        try {
+            _repository.addMovieToFavorites(_movie);
+            _view.markAsFavorite();
+        } catch (Exception e) {
+            e.printStackTrace();
+            _view.unmarkAsFavorite();
+        }
+    }
+
+    public void removeFromFavorites() {
+        try {
+            _repository.removeMovieFromFavorites(_movie.getId());
+            _view.unmarkAsFavorite();
+        } catch (Exception e) {
+            e.printStackTrace();
+            _view.markAsFavorite();
+        }
+    }
 }
