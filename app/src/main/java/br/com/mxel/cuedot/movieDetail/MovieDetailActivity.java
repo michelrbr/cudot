@@ -81,4 +81,14 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     public void hideVideosError() {
 
     }
+
+    @Override
+    public void markAsFavorite() {
+
+    }
+
+    @Override
+    public void unmarkAsFavorite() {
+
+    }
 }
