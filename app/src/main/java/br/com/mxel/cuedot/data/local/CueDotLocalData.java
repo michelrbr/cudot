@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.mxel.cuedot.data.model.IMovie;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by michelribeiro on 01/08/17.
@@ -22,12 +23,12 @@ public class CueDotLocalData implements ILocalDataSource {
     }
 
     @Override
-    public void insertMovieToFavorites(IMovie movie) throws Exception {
-
+    public Single<Void> insertMovieToFavorites(IMovie movie) {
+        return null;
     }
 
     @Override
-    public void removeMovieFromFavorite(long movieId) throws Exception {
-
+    public Single<Void> removeMovieFromFavorite(long movieId) {
+        return null;
     }
 }
