@@ -66,7 +66,7 @@ public class MovieDetailPresenter {
         }
         _repository.getMovieVideos(_movie.getId())
                 .map(listVideoResult -> listVideoResult.results)
-                .subscribeOn(_scheduler.mainThread())
+                .observeOn(_scheduler.mainThread())
                 .subscribe( movieVideos -> {
                     if(_view != null) {
                         _view.showMovieLoading(false);
