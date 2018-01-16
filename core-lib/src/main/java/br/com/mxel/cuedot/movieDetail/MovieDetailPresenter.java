@@ -6,6 +6,12 @@ import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.data.model.IMovieVideo;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by michelribeiro on 04/08/17.
@@ -80,22 +86,47 @@ public class MovieDetailPresenter {
     }
 
     public void addToFavorites() {
-        try {
-            _repository.addMovieToFavorites(_movie);
-            _view.markAsFavorite();
-        } catch (Exception e) {
-            e.printStackTrace();
-            _view.unmarkAsFavorite();
-        }
+
+        _repository.addMovieToFavorites(_movie)
+                .observeOn(_scheduler.mainThread())
+                .subscribe(new SingleObserver<Void>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Void v) {
+                        _view.markAsFavorite();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        _view.unmarkAsFavorite();
+                    }
+                });
     }
 
     public void removeFromFavorites() {
-        try {
-            _repository.removeMovieFromFavorites(_movie.getId());
-            _view.unmarkAsFavorite();
-        } catch (Exception e) {
-            e.printStackTrace();
-            _view.markAsFavorite();
-        }
+        _repository.removeMovieFromFavorites(_movie.getId())
+                .observeOn(_scheduler.mainThread())
+                .subscribe(new SingleObserver<Void>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Void v) {
+                        _view.unmarkAsFavorite();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        _view.markAsFavorite();
+                    }
+                });
     }
 }

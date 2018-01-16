@@ -12,6 +12,7 @@ import br.com.mxel.cuedot.data.remote.model.ListVideoResult;
 import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
 import br.com.mxel.cuedot.data.remote.model.Movie;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by michelribeiro on 31/07/17.
@@ -32,12 +33,12 @@ public class RepositoryDataSource {
         return _localData.getFavoriteMoviesList();
     }
 
-    public void addMovieToFavorites(IMovie movie) throws Exception {
-        _localData.insertMovieToFavorites(movie);
+    public Single<Void> addMovieToFavorites(IMovie movie) {
+        return _localData.insertMovieToFavorites(movie);
     }
 
-    public void removeMovieFromFavorites(long movieId) throws Exception {
-        _localData.removeMovieFromFavorite(movieId);
+    public Single<Void> removeMovieFromFavorites(long movieId) {
+        return _localData.removeMovieFromFavorite(movieId);
     }
 
     public Observable<ListMovieResult> getMoviesOrderBy(String orderBy, int page) {
