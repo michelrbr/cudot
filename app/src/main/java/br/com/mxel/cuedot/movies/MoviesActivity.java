@@ -3,8 +3,11 @@ package br.com.mxel.cuedot.movies;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -27,11 +30,18 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     RecyclerView moviesRecyclerView;
     @BindView(R.id.ordering_spinner)
     AppCompatSpinner orderingSpinner;
+    @BindView(R.id.loading_progress)
+    ProgressBar loadingProgress;
+    @BindView(R.id.ordering_view)
+    View orderingView;
+    @BindView(R.id.error_text_view)
+    AppCompatTextView errorTextView;
 
     @Inject
     MoviesPresenter _presenter;
 
     private Unbinder _unbinder;
+    private boolean _loadMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,39 +81,45 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     @Override
     public void showLoading() {
 
+        loadingProgress.setVisibility(View.VISIBLE);
+        moviesRecyclerView.setVisibility(View.GONE);
+        orderingView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideLoading() {
 
+        loadingProgress.setVisibility(View.GONE);
+        moviesRecyclerView.setVisibility(View.VISIBLE);
+        orderingView.setVisibility(View.VISIBLE);
+        errorTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void setEnableLoadMore(boolean enabled) {
-
+        _loadMore = enabled;
     }
 
     @Override
     public void showError(Throwable throwable) {
+
         Timber.e(throwable);
+        loadingProgress.setVisibility(View.GONE);
+        moviesRecyclerView.setVisibility(View.GONE);
+        orderingView.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.VISIBLE);
+        errorTextView.setText(throwable.getMessage());
     }
 
     @Override
     public void hideError() {
-
+        errorTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void showMoviesList(List<IMovie> movies) {
 
-        // Just to test Detail movie activity
-        /*final IMovie movie = movies.get(0);
-        ((TextView) findViewById(R.id.textList)).setText(strList);
-        findViewById(R.id.textList).setOnClickListener(view -> {
-            Intent intent = new Intent(MoviesActivity.this, MovieDetailActivity.class);
-            intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, (Movie)movie);
-            startActivity(intent);
-        });*/
         ((MoviesAdapter) moviesRecyclerView.getAdapter()).setData(movies);
 
     }
@@ -113,7 +129,25 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         moviesRecyclerView.setHasFixedSize(true);
         moviesRecyclerView.setAdapter(new MoviesAdapter());
+        moviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-        //orderingSpinner.setAdapter(new SimpleAdapter(this, ));
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+
+                    if(_loadMore) {
+                        _presenter.loadMore();
+                    }
+                }
+            }
+        });
     }
 }
