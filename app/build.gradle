@@ -99,7 +99,17 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation rootProject.ext.testLibraries.junit
+
+    // Android
     implementation rootProject.ext.libraries.appcompat
+    implementation rootProject.ext.libraries.recyclerView
+    implementation rootProject.ext.libraries.cardView
+    implementation rootProject.ext.libraries.picasso
+    implementation rootProject.ext.libraries.timber
+
+    // View Injection
+    implementation rootProject.ext.libraries.butterknife
+    annotationProcessor rootProject.ext.libraries.butterknifeCompiler
 
     // Dependency injection
     implementation rootProject.ext.libraries.dagger
