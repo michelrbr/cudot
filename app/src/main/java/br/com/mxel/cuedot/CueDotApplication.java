@@ -3,6 +3,8 @@ package br.com.mxel.cuedot;
 import android.app.Application;
 import android.os.StrictMode;
 
+import timber.log.Timber;
+
 
 /**
  * Created by michelribeiro on 18/07/17.
@@ -17,6 +19,7 @@ public class CueDotApplication extends Application {
         super.onCreate();
 
         if(BuildConfig.DEBUG) {
+            //https://developer.android.com/reference/android/os/StrictMode.html
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
@@ -29,6 +32,7 @@ public class CueDotApplication extends Application {
         }
 
         initDagger();
+        initLogger();
     }
 
     private void initDagger(){
@@ -36,6 +40,13 @@ public class CueDotApplication extends Application {
         _appComponent = DaggerAppComponent.builder()
                 .androidModule(new AndroidModule(this))
                 .build();
+    }
+
+    private void initLogger() {
+
+        if(BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     // GETTER / SETTER ============================================================================

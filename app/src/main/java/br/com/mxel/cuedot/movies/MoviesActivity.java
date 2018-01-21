@@ -1,10 +1,10 @@
 package br.com.mxel.cuedot.movies;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.TextView;
+import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
@@ -13,21 +13,32 @@ import javax.inject.Inject;
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
 import br.com.mxel.cuedot.data.model.IMovie;
-import br.com.mxel.cuedot.data.remote.model.Movie;
-import br.com.mxel.cuedot.movieDetail.MovieDetailActivity;
+import br.com.mxel.cuedot.movies.adapter.MoviesAdapter;
 import br.com.mxel.cuedot.util.CueDotConstants;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
-    private static final String LOG_TAG = MoviesActivity.class.getSimpleName();
+    //Views
+    @BindView(R.id.movies_recycler_view)
+    RecyclerView moviesRecyclerView;
+    @BindView(R.id.ordering_spinner)
+    AppCompatSpinner orderingSpinner;
 
     @Inject
     MoviesPresenter _presenter;
+
+    private Unbinder _unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
+
+        _unbinder = ButterKnife.bind(this);
 
         DaggerMoviesComponent.builder()
                 .appComponent(CueDotApplication.getAppComponent())
@@ -35,9 +46,26 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
                 .build()
                 .inject(this);
 
-        _presenter.bind(this);
+        setupView();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        _presenter.bind(this);
         _presenter.getMoviesOrderedBy(CueDotConstants.ORDER_BY_POPULAR);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        _presenter.unbind();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        _unbinder.unbind();
     }
 
     @Override
@@ -57,7 +85,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
     @Override
     public void showError(Throwable throwable) {
-        Log.e(LOG_TAG, "Cassildis Error: " + throwable.getMessage());
+        Timber.e(throwable);
     }
 
     @Override
@@ -68,21 +96,24 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     @Override
     public void showMoviesList(List<IMovie> movies) {
 
-        String strList = "MOVIES LIST\n\n";
-        for (IMovie m : movies) {
-            Log.d(LOG_TAG, m.getTitle());
-            strList += m.getTitle() + "\n";
-        }
-
-
         // Just to test Detail movie activity
-        final IMovie movie = movies.get(0);
+        /*final IMovie movie = movies.get(0);
         ((TextView) findViewById(R.id.textList)).setText(strList);
         findViewById(R.id.textList).setOnClickListener(view -> {
             Intent intent = new Intent(MoviesActivity.this, MovieDetailActivity.class);
             intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, (Movie)movie);
             startActivity(intent);
-        });
+        });*/
+        ((MoviesAdapter) moviesRecyclerView.getAdapter()).setData(movies);
 
+    }
+
+    private void setupView() {
+
+        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        moviesRecyclerView.setHasFixedSize(true);
+        moviesRecyclerView.setAdapter(new MoviesAdapter());
+
+        //orderingSpinner.setAdapter(new SimpleAdapter(this, ));
     }
 }
