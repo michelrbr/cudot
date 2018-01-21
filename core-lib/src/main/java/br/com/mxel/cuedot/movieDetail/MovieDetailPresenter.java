@@ -6,12 +6,8 @@ import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.data.model.IMovieVideo;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
-import io.reactivex.SingleOnSubscribe;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by michelribeiro on 04/08/17.

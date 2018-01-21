@@ -43,25 +43,28 @@ public class MoviesPresenter {
 
     public void getMoviesOrderedBy(String order) {
 
-        _currentOrder = order;
-        _currentPage = 1;
-        if(_view != null) {
-            _view.setEnableLoadMore(true);
-            _view.showLoading();
+        if(_currentOrder == null || !_currentOrder.equals(order)) {
+            if(_movies != null) _movies.clear();
+            _currentOrder = order;
+            _currentPage = 1;
+            if (_view != null) {
+                _view.setEnableLoadMore(true);
+                _view.showLoading();
+            }
+            loadMovies().observeOn(_scheduler.mainThread())
+                    .subscribe(
+                            listResult -> {
+                                if (_view != null) {
+                                    _view.hideLoading();
+                                    _view.showMoviesList(listResult);
+                                }
+                            },
+                            throwable -> {
+                                if (_view != null) {
+                                    _view.showError(throwable);
+                                }
+                            });
         }
-        loadMovies().observeOn(_scheduler.mainThread())
-                .subscribe(
-                        listResult -> {
-                            if(_view != null) {
-                                _view.hideLoading();
-                                _view.showMoviesList(listResult);
-                            }
-                        },
-                        throwable -> {
-                            if(_view != null) {
-                                _view.showError(throwable);
-                            }
-                        });
     }
 
     public void loadMore(){
