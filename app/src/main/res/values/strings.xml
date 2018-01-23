@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">CueDot</string>
     <string name="order_by">Order by:</string>
+
+    <array name="order_by_list">
+        <item>Most popular</item>
+        <item>Highest Rated</item>
+        <item>Now playing</item>
+        <item>Upcoming</item>
+    </array>
+
 </resources>

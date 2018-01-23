@@ -13,8 +13,9 @@
         android:layout_margin="@dimen/normal_margin"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="@string/order_by"/>
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/ordering_spinner"
@@ -31,9 +32,9 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/error_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:textSize="@dimen/x_large_font"
         android:textStyle="bold"
         tools:text="Error view"/>

@@ -7,6 +7,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import br.com.mxel.cuedot.R;
 import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.movies.adapter.MoviesAdapter;
 import br.com.mxel.cuedot.util.CueDotConstants;
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -39,6 +42,9 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
     @Inject
     MoviesPresenter _presenter;
+
+    @BindArray(R.array.order_by_list)
+    String[] orderArray;
 
     private Unbinder _unbinder;
     private boolean _loadMore;
@@ -63,7 +69,6 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     protected void onResume() {
         super.onResume();
         _presenter.bind(this);
-        _presenter.getMoviesOrderedBy(CueDotConstants.ORDER_BY_POPULAR);
     }
 
     @Override
@@ -83,7 +88,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
         loadingProgress.setVisibility(View.VISIBLE);
         moviesRecyclerView.setVisibility(View.GONE);
-        orderingView.setVisibility(View.GONE);
+        //orderingView.setVisibility(View.GONE);
         errorTextView.setVisibility(View.GONE);
     }
 
@@ -107,7 +112,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
         Timber.e(throwable);
         loadingProgress.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.GONE);
-        orderingView.setVisibility(View.GONE);
+        //orderingView.setVisibility(View.GONE);
         errorTextView.setVisibility(View.VISIBLE);
         errorTextView.setText(throwable.getMessage());
     }
@@ -120,6 +125,9 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     @Override
     public void showMoviesList(List<IMovie> movies) {
 
+        loadingProgress.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
+        moviesRecyclerView.setVisibility(View.VISIBLE);
         ((MoviesAdapter) moviesRecyclerView.getAdapter()).setData(movies);
 
     }
@@ -147,6 +155,40 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
                         _presenter.loadMore();
                     }
                 }
+            }
+        });
+
+        ArrayAdapter orderAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                orderArray);
+        orderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        orderingSpinner.setAdapter(orderAdapter);
+        orderingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String ordering;
+                switch (position) {
+                    case 1:
+                        ordering = CueDotConstants.ORDER_BY_TOP_RATED;
+                        break;
+                    case 2:
+                        ordering = CueDotConstants.ORDER_BY_NOW_PLAYING;
+                        break;
+                    case 3:
+                        ordering = CueDotConstants.ORDER_BY_UPCOMING;
+                        break;
+                    default:
+                        ordering = CueDotConstants.ORDER_BY_POPULAR;
+                }
+
+                _presenter.getMoviesOrderedBy(ordering);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
