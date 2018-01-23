@@ -8,6 +8,8 @@ public final class CueDotConstants {
 
     public final static String ORDER_BY_POPULAR = "popular";
     public final static String ORDER_BY_TOP_RATED = "top_rated";
+    public final static String ORDER_BY_NOW_PLAYING = "now_playing";
+    public final static String ORDER_BY_UPCOMING = "upcoming";
     public final static String IMAGES_BASE_PATH = "https://image.tmdb.org/t/p";
     public final static String POSTER_SIZE = "w342";
     public final static String BACKDROP_SIZE = "w780";
