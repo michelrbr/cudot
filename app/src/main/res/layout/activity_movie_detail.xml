@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="br.com.mxel.cuedot.movieDetail.MovieDetailActivity">
 
-    <TextView
-        android:id="@+id/text_description"
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/normal_margin"
+            android:layout_gravity="center_horizontal"
+            tools:visibility="gone"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/error_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/x_large_font"
+            android:textStyle="bold"
+            tools:text="Error view"
+            tools:visibility="gone"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/backdrop_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/backdrop_height"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/release_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_font"
+                android:layout_margin="@dimen/normal_margin"
+                tools:text="@tools:sample/date/mmddyy"/>
+            <RatingBar
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/normal_margin"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                tools:rating="3.5"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/description_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal_font"
+            android:layout_margin="8dp"
+            tools:text="@tools:sample/lorem/random"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v4.widget.NestedScrollView>

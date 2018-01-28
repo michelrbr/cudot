@@ -88,7 +88,6 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
         loadingProgress.setVisibility(View.VISIBLE);
         moviesRecyclerView.setVisibility(View.GONE);
-        //orderingView.setVisibility(View.GONE);
         errorTextView.setVisibility(View.GONE);
     }
 
@@ -112,7 +111,6 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
         Timber.e(throwable);
         loadingProgress.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.GONE);
-        //orderingView.setVisibility(View.GONE);
         errorTextView.setVisibility(View.VISIBLE);
         errorTextView.setText(throwable.getMessage());
     }
