@@ -39,7 +39,7 @@ public class Movie implements Serializable, IMovie {
     private String _synopsis;
 
     @SerializedName("vote_average")
-    private double _rating;
+    private float _rating;
 
     @SerializedName("release_date")
     private String _releaseDate;
@@ -107,12 +107,12 @@ public class Movie implements Serializable, IMovie {
     }
 
     @Override
-    public double getRating() {
+    public float getRating() {
         return _rating;
     }
 
     @Override
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this._rating = rating;
     }
 

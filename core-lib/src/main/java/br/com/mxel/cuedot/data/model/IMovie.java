@@ -25,9 +25,9 @@ public interface IMovie {
 
     void setSynopsis(String synopsis);
 
-    double getRating();
+    float getRating();
 
-    void setRating(double rating);
+    void setRating(float rating);
 
     String getReleaseDate();
 

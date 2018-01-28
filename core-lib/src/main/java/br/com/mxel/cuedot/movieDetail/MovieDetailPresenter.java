@@ -56,6 +56,7 @@ public class MovieDetailPresenter {
                     }
                 }, throwable -> {
                     if (_view != null) {
+                        _view.showMovieLoading(false);
                         _view.showMovieError(throwable);
                     }
                 });
@@ -76,6 +77,7 @@ public class MovieDetailPresenter {
                     }
                 }, throwable -> {
                     if (_view != null) {
+                        _view.showMovieLoading(false);
                         _view.showVideosError(throwable);
                     }
                 });
