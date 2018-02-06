@@ -40,6 +40,9 @@ dependencies {
 
     // RXJava
     compile rootProject.ext.libraries.rxjava
+
+    // Database
+    compile rootProject.ext.libraries.ormLiteCore
 }
 
 sourceCompatibility = "1.8"
