@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.util.CueDotConstants;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -65,7 +66,7 @@ public class MoviesPresenterTest {
 
         // mock repository calls
         when(_repository.getMoviesOrderBy(any(String.class), any(Integer.class)))
-                .thenReturn(Observable.just(list));
+                .thenReturn(Single.just(list));
 
         _presenter.getMoviesOrderedBy(CueDotConstants.ORDER_BY_POPULAR);
 

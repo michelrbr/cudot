@@ -8,12 +8,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.model.IMovie;
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
-import io.reactivex.Observable;
+import io.reactivex.Completable;
 import io.reactivex.Single;
-import io.reactivex.SingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,12 +38,7 @@ public class MovieDetailPresenterTest {
     public void setupPresenter() {
         MockitoAnnotations.initMocks(this);
 
-        Single<Void> single = new Single<Void>() {
-            @Override
-            protected void subscribeActual(SingleObserver<? super Void> observer) {
-                observer.onSuccess(null);
-            }
-        };
+        Completable completable = Completable.complete();
 
         // mock scheduler calls
         when(_scheduler.mainThread())
@@ -58,9 +51,9 @@ public class MovieDetailPresenterTest {
         when(_movie.getTitle()).thenReturn("Testing movie");
 
         // mock repository calls
-        when(_repository.getMovie(any(Long.class))).thenReturn(Observable.just(_movie));
-        when(_repository.addMovieToFavorites(any(IMovie.class))).thenReturn(single);
-        when(_repository.removeMovieFromFavorites(any(Long.class))).thenReturn(single);
+        when(_repository.getMovie(any(Long.class))).thenReturn(Single.just(_movie));
+        when(_repository.addMovieToFavorites(any(Movie.class))).thenReturn(completable);
+        when(_repository.removeMovieFromFavorites(any(Long.class))).thenReturn(completable);
 
         _presenter = new MovieDetailPresenter(_repository, _scheduler, _movie);
         _presenter.bind(_view);
@@ -85,7 +78,7 @@ public class MovieDetailPresenterTest {
         _presenter.addToFavorites();
 
         InOrder viewOrder = Mockito.inOrder(_view, _repository, _scheduler);
-        viewOrder.verify(_repository).addMovieToFavorites(any(IMovie.class));
+        viewOrder.verify(_repository).addMovieToFavorites(any(Movie.class));
         viewOrder.verify(_scheduler).mainThread();
         viewOrder.verify(_view).markAsFavorite();
     }

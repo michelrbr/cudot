@@ -1,7 +1,7 @@
 package br.com.mxel.cuedot.movieDetail;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;

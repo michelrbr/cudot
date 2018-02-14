@@ -2,8 +2,8 @@ package br.com.mxel.cuedot.movieDetail;
 
 import java.util.List;
 
-import br.com.mxel.cuedot.data.model.IMovie;
-import br.com.mxel.cuedot.data.model.IMovieVideo;
+import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.MovieVideo;
 
 /**
  * Created by michelribeiro on 04/08/17.
@@ -13,7 +13,7 @@ public interface IMovieDetailView {
 
     void showMovieLoading(boolean show);
 
-    void showMovie(IMovie movie);
+    void showMovie(Movie movie);
 
     void showMovieError(Throwable error);
 
@@ -21,7 +21,7 @@ public interface IMovieDetailView {
 
     void showVideosLoading(boolean show);
 
-    void showVideos(List<? extends IMovieVideo> movieVideos);
+    void showVideos(List<? extends MovieVideo> movieVideos);
 
     void showVideosError(Throwable error);
 

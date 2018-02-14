@@ -2,7 +2,7 @@ package br.com.mxel.cuedot.data.local;
 
 import java.util.List;
 
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -14,7 +14,7 @@ import io.reactivex.Single;
 public interface ILocalDataSource {
 
     Maybe<List<Movie>> getFavoriteMoviesList();
-    Single<Movie> getMovie(Long movieId);
+    Single<Movie> getMovie(int movieId);
     Completable insertMovieToFavorites(Movie movie);
-    Completable removeMovieFromFavorite(Long movieId);
+    Completable removeMovieFromFavorite(int movieId);
 }

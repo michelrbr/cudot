@@ -6,7 +6,7 @@ import java.util.Scanner;
 import javax.inject.Inject;
 
 import br.com.mxel.cuedot.MainClass;
-import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.util.CueDotConstants;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -23,8 +23,8 @@ public class MoviesView implements IMoviesView {
     @Inject
     Scanner scanner;
 
-    private List<IMovie> _movies;
-    private PublishSubject<IMovie> _notifyMovie = PublishSubject.create();
+    private List<Movie> _movies;
+    private PublishSubject<Movie> _notifyMovie = PublishSubject.create();
 
     private boolean _isRunning = false;
     private boolean _canLoadMore = true;
@@ -58,11 +58,11 @@ public class MoviesView implements IMoviesView {
     }
 
     @Override
-    public void showMoviesList(List<IMovie> movies) {
+    public void showMoviesList(List<Movie> movies) {
 
         _movies = movies;
         int count = 0;
-        for (IMovie m : _movies) {
+        for (Movie m : _movies) {
             count++;
             System.out.println(String.valueOf(count) + ": " + m.getTitle() + " (" + m.getId() + ")");
         }
@@ -119,7 +119,7 @@ public class MoviesView implements IMoviesView {
         return _isRunning;
     }
 
-    public Observable<IMovie> getNotifyMovie() {
+    public Observable<Movie> getNotifyMovie() {
         return _notifyMovie.hide();
     }
 }

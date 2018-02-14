@@ -1,13 +1,11 @@
-package br.com.mxel.cuedot.data.remote.model;
+package br.com.mxel.cuedot.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import br.com.mxel.cuedot.data.model.IMovieVideo;
-
-public class MovieVideo implements IMovieVideo {
+public class MovieVideo {
 
     @SerializedName("id")
-    public String _id;
+    public Integer _id;
 
     @SerializedName("iso_3166_1")
     public String _iso31661;
@@ -30,82 +28,66 @@ public class MovieVideo implements IMovieVideo {
     @SerializedName("type")
     public String _type;
 
-    @Override
-    public String getId() {
+    public Integer getId() {
         return _id;
     }
 
-    @Override
-    public void setId(String id) {
+    public void setId(Integer id) {
         this._id = id;
     }
 
-    @Override
     public String getIso31661() {
         return _iso31661;
     }
 
-    @Override
     public void setIso31661(String iso31661) {
         this._iso31661 = iso31661;
     }
 
-    @Override
     public String getIso6391() {
         return _iso6391;
     }
 
-    @Override
     public void setIso6391(String iso6391) {
         this._iso6391 = iso6391;
     }
 
-    @Override
     public String getKey() {
         return _key;
     }
 
-    @Override
     public void setKey(String key) {
         this._key = key;
     }
 
-    @Override
     public String getName() {
         return _name;
     }
 
-    @Override
     public void setName(String name) {
         this._name = name;
     }
 
-    @Override
     public String getSite() {
         return _site;
     }
 
-    @Override
     public void setSite(String site) {
         this._site = site;
     }
 
-    @Override
     public Long getSize() {
         return _size;
     }
 
-    @Override
     public void setSize(Long size) {
         this._size = size;
     }
 
-    @Override
     public String getType() {
         return _type;
     }
 
-    @Override
     public void setType(String type) {
         this._type = type;
     }

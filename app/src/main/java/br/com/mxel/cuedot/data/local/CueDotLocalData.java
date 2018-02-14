@@ -11,7 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -75,7 +75,7 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
     }
 
     @Override
-    public Single<Movie> getMovie(Long movieId) {
+    public Single<Movie> getMovie(int movieId) {
 
         try {
             Movie movie = movieDao.queryBuilder().where().eq("id", movieId).queryForFirst();
@@ -104,10 +104,10 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
     }
 
     @Override
-    public Completable removeMovieFromFavorite(Long movieId) {
+    public Completable removeMovieFromFavorite(int movieId) {
         try {
 
-            Movie movie = movieDao.queryForId(movieId.intValue());
+            Movie movie = movieDao.queryForId(movieId);
             if(movie != null) {
                 movie.setIsFavorite(false);
                 movieDao.delete(movie);

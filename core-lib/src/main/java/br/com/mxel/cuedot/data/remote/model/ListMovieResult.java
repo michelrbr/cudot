@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import br.com.mxel.cuedot.data.model.Movie;
+
 /**
  * Created by michelribeiro on 26/07/17.
  */

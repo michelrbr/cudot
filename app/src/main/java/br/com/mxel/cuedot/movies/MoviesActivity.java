@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
-import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.movies.adapter.MoviesAdapter;
 import br.com.mxel.cuedot.util.CueDotConstants;
 import butterknife.BindArray;
@@ -122,7 +122,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     }
 
     @Override
-    public void showMoviesList(List<IMovie> movies) {
+    public void showMoviesList(List<Movie> movies) {
 
         loadingProgress.setVisibility(View.GONE);
         errorTextView.setVisibility(View.GONE);

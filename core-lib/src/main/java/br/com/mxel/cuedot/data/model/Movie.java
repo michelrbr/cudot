@@ -1,4 +1,4 @@
-package br.com.mxel.cuedot.data.remote.model;
+package br.com.mxel.cuedot.data.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
@@ -6,7 +6,6 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
-import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.util.CueDotConstants;
 
 /**
@@ -14,7 +13,7 @@ import br.com.mxel.cuedot.util.CueDotConstants;
  */
 
 @DatabaseTable(tableName = "movies")
-public class Movie implements Serializable, IMovie {
+public class Movie implements Serializable {
 
     /*
     original _title
@@ -28,7 +27,7 @@ public class Movie implements Serializable, IMovie {
 
     @SerializedName("id")
     @DatabaseField(columnName = "id", id = true)
-    private long _id;
+    private int _id;
 
     @DatabaseField(columnName = "title")
     @SerializedName("title")
@@ -64,27 +63,22 @@ public class Movie implements Serializable, IMovie {
     @DatabaseField(columnName = "is_favorite")
     private boolean _isFavorite;
 
-    @Override
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    @Override
-    public void setId(long id) {
+    public void setId(int id) {
         this._id = id;
     }
 
-    @Override
     public String getTitle() {
         return _title;
     }
 
-    @Override
     public void setTitle(String title) {
         this._title = title;
     }
 
-    @Override
     public String getPosterPath() {
         return String.format("%s/%s%s",
                 CueDotConstants.IMAGES_BASE_PATH,
@@ -92,12 +86,10 @@ public class Movie implements Serializable, IMovie {
                 _posterPath);
     }
 
-    @Override
     public void setPosterPath(String posterPath) {
         this._posterPath = posterPath;
     }
 
-    @Override
     public String getBackdropPath() {
         return String.format("%s/%s%s",
                 CueDotConstants.IMAGES_BASE_PATH,
@@ -105,57 +97,46 @@ public class Movie implements Serializable, IMovie {
                 _backdropPath);
     }
 
-    @Override
     public void setBackdropPath(String backdropPath) {
         this._backdropPath = backdropPath;
     }
 
-    @Override
     public String getSynopsis() {
         return _synopsis;
     }
 
-    @Override
     public void setSynopsis(String synopsis) {
         this._synopsis = synopsis;
     }
 
-    @Override
     public float getRating() {
         return _rating;
     }
 
-    @Override
     public void setRating(float rating) {
         this._rating = rating;
     }
 
-    @Override
     public String getReleaseDate() {
         return _releaseDate;
     }
 
-    @Override
     public void setReleaseDate(String releaseDate) {
         this._releaseDate = releaseDate;
     }
 
-    @Override
     public String getHomepage() {
         return _homepage;
     }
 
-    @Override
     public void setHomepage(String homepage) {
         this._homepage = homepage;
     }
 
-    @Override
     public boolean isVideo() {
         return _video;
     }
 
-    @Override
     public void setVideo(boolean video) {
         this._video = video;
     }
@@ -164,7 +145,7 @@ public class Movie implements Serializable, IMovie {
         return _isFavorite;
     }
 
-    public void setIsFavorite(boolean _isFavorite) {
-        this._isFavorite = _isFavorite;
+    public void setIsFavorite(boolean isFavorite) {
+        this._isFavorite = isFavorite;
     }
 }

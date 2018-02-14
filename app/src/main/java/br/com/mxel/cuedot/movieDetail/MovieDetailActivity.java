@@ -18,9 +18,8 @@ import javax.inject.Inject;
 
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
-import br.com.mxel.cuedot.data.model.IMovie;
-import br.com.mxel.cuedot.data.model.IMovieVideo;
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.MovieVideo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -112,7 +111,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     @Override
-    public void showMovie(IMovie movie) {
+    public void showMovie(Movie movie) {
 
         setTitle(movie.getTitle());
 
@@ -141,7 +140,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     @Override
-    public void showVideos(List<? extends IMovieVideo> movieVideos) {
+    public void showVideos(List<? extends MovieVideo> movieVideos) {
 
     }
 

@@ -2,8 +2,9 @@ package br.com.mxel.cuedot.data.local;
 
 import java.util.List;
 
-import br.com.mxel.cuedot.data.model.IMovie;
-import io.reactivex.Observable;
+import br.com.mxel.cuedot.data.model.Movie;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 /**
@@ -12,22 +13,22 @@ import io.reactivex.Single;
 
 public class ConsoleLocalData implements ILocalDataSource {
     @Override
-    public Observable<List<IMovie>> getFavoriteMoviesList() {
+    public Maybe<List<Movie>> getFavoriteMoviesList() {
         return null;
     }
 
     @Override
-    public Observable<IMovie> getMovie(long movieId) {
+    public Single<Movie> getMovie(int movieId) {
         return null;
     }
 
     @Override
-    public Single<Void> insertMovieToFavorites(IMovie movie) {
+    public Completable insertMovieToFavorites(Movie movie) {
         return null;
     }
 
     @Override
-    public Single<Void> removeMovieFromFavorite(long movieId) {
+    public Completable removeMovieFromFavorite(int movieId) {
         return null;
     }
 }

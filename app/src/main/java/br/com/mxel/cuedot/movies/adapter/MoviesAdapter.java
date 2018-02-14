@@ -12,8 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import br.com.mxel.cuedot.data.model.IMovie;
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.movieDetail.MovieDetailActivity;
 import timber.log.Timber;
 
@@ -23,7 +22,7 @@ import timber.log.Timber;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
-    private List<IMovie> _data;
+    private List<Movie> _data;
 
     public MoviesAdapter() {
     }
@@ -34,7 +33,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         MovieViewHolder holder = new MovieViewHolder(view);
         holder.itemView.setOnClickListener(v -> {
 
-            IMovie movie = _data.get((Integer) v.getTag());
+            Movie movie = _data.get((Integer) v.getTag());
 
             Timber.tag("MoviesAdapter").d("Movie id: %d", movie.getId());
 
@@ -48,7 +47,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
-        IMovie movie = _data.get(position);
+        Movie movie = _data.get(position);
         holder.itemView.setTag(position);
         ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(movie.getTitle());
         Picasso.with(holder.itemView.getContext())
@@ -62,7 +61,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         return (_data != null) ? _data.size() : 0;
     }
 
-    public void setData(List<IMovie> data) {
+    public void setData(List<Movie> data) {
         _data = data;
         notifyDataSetChanged();
     }

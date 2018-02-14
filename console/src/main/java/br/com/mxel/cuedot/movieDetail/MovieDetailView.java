@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 import javax.inject.Inject;
 
-import br.com.mxel.cuedot.data.model.IMovie;
-import br.com.mxel.cuedot.data.model.IMovieVideo;
+import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.MovieVideo;
 
 
 /**
@@ -22,7 +22,7 @@ public class MovieDetailView implements IMovieDetailView {
     MovieDetailPresenter presenter;
 
     private boolean _shouldFinish = false;
-    private IMovie _movie;
+    private Movie _movie;
 
     public MovieDetailView(MovieDetailComponent component) {
 
@@ -43,7 +43,7 @@ public class MovieDetailView implements IMovieDetailView {
     }
 
     @Override
-    public void showMovie(IMovie movie) {
+    public void showMovie(Movie movie) {
 
         _movie = movie;
 
@@ -74,11 +74,11 @@ public class MovieDetailView implements IMovieDetailView {
     }
 
     @Override
-    public void showVideos(List<? extends IMovieVideo> movieVideos) {
+    public void showVideos(List<? extends MovieVideo> movieVideos) {
         int count = 0;
 
         if(movieVideos.size() > 0) {
-            for (IMovieVideo mv : movieVideos) {
+            for (MovieVideo mv : movieVideos) {
                 count++;
                 System.out.println(String.valueOf(count) + ": " + mv.getName());
             }

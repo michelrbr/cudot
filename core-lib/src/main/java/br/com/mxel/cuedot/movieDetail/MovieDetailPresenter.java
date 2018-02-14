@@ -3,8 +3,8 @@ package br.com.mxel.cuedot.movieDetail;
 import java.util.List;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.model.IMovieVideo;
-import br.com.mxel.cuedot.data.remote.model.Movie;
+import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.model.MovieVideo;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 
 /**
@@ -16,7 +16,7 @@ public class MovieDetailPresenter {
     private RepositoryDataSource _repository;
     private ISchedulerProvider _scheduler;
     private Movie _movie;
-    private List<IMovieVideo> _movieVideos;
+    private List<MovieVideo> _movieVideos;
     private IMovieDetailView _view;
 
     public MovieDetailPresenter(RepositoryDataSource repository,

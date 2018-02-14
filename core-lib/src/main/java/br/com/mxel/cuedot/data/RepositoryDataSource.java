@@ -6,10 +6,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import br.com.mxel.cuedot.data.local.ILocalDataSource;
+import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
 import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
 import br.com.mxel.cuedot.data.remote.model.ListVideoResult;
-import br.com.mxel.cuedot.data.remote.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -37,7 +37,7 @@ public class RepositoryDataSource {
         return _localData.insertMovieToFavorites(movie);
     }
 
-    public Completable removeMovieFromFavorites(long movieId) {
+    public Completable removeMovieFromFavorites(int movieId) {
         return _localData.removeMovieFromFavorite(movieId);
     }
 
@@ -45,9 +45,8 @@ public class RepositoryDataSource {
         return _remoteData.getMoviesOrderBy(orderBy, page);
     }
 
-    public Single<Movie> getMovie(long movieId) {
+    public Single<Movie> getMovie(int movieId) {
 
-        // Check local data source before request remote one
         return Single
                 .concat(_localData.getMovie(movieId), _remoteData.getMovie(movieId))
                 .filter(movie -> movie.getId() != 0)
