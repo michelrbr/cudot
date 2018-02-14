@@ -3,11 +3,9 @@ package br.com.mxel.cuedot.movieDetail;
 import java.util.List;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.data.model.IMovieVideo;
+import br.com.mxel.cuedot.data.remote.model.Movie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by michelribeiro on 04/08/17.
@@ -17,13 +15,13 @@ public class MovieDetailPresenter {
 
     private RepositoryDataSource _repository;
     private ISchedulerProvider _scheduler;
-    private IMovie _movie;
+    private Movie _movie;
     private List<IMovieVideo> _movieVideos;
     private IMovieDetailView _view;
 
     public MovieDetailPresenter(RepositoryDataSource repository,
                                 ISchedulerProvider scheduler,
-                                IMovie movie) {
+                                Movie movie) {
         _repository = repository;
         _scheduler = scheduler;
         _movie = movie;
@@ -53,6 +51,11 @@ public class MovieDetailPresenter {
                     if(_view != null) {
                         _view.showMovieLoading(false);
                         _view.showMovie(_movie);
+                        if(_movie.isFavorite()) {
+                            _view.markAsFavorite();
+                        } else {
+                            _view.unmarkAsFavorite();
+                        }
                     }
                 }, throwable -> {
                     if (_view != null) {
@@ -83,24 +86,25 @@ public class MovieDetailPresenter {
                 });
     }
 
+    public void toggleFavorite() {
+        if (_movie.isFavorite()) {
+            removeFromFavorites();
+        } else {
+            addToFavorites();
+        }
+    }
+
     public void addToFavorites() {
 
         _repository.addMovieToFavorites(_movie)
                 .observeOn(_scheduler.mainThread())
-                .subscribe(new SingleObserver<Void>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(Void v) {
+                .subscribe(() -> {
+                    if(_view != null) {
                         _view.markAsFavorite();
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    if(_view != null) {
                         _view.unmarkAsFavorite();
                     }
                 });
@@ -109,20 +113,13 @@ public class MovieDetailPresenter {
     public void removeFromFavorites() {
         _repository.removeMovieFromFavorites(_movie.getId())
                 .observeOn(_scheduler.mainThread())
-                .subscribe(new SingleObserver<Void>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(Void v) {
+                .subscribe(() -> {
+                    if(_view != null) {
                         _view.unmarkAsFavorite();
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    if(_view != null) {
                         _view.markAsFavorite();
                     }
                 });

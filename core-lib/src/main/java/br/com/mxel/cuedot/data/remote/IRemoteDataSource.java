@@ -4,6 +4,7 @@ import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
 import br.com.mxel.cuedot.data.remote.model.ListVideoResult;
 import br.com.mxel.cuedot.data.remote.model.Movie;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -15,15 +16,15 @@ import retrofit2.http.Query;
 public interface IRemoteDataSource {
 
     @GET("movie/{order_by}")
-    Observable<ListMovieResult> getMoviesOrderBy(@Path("order_by") String orderBy,
+    Single<ListMovieResult> getMoviesOrderBy(@Path("order_by") String orderBy,
                                                  @Query("page") int page);
 
     @GET("movie/{movie_id}")
-    Observable<Movie> getMovie(@Path("movie_id") long movieId);
+    Single<Movie> getMovie(@Path("movie_id") long movieId);
 
     @GET("movie/{movie_id}/similar")
-    Observable<ListMovieResult> getSimilarMovies(@Path("movie_id") long movieId);
+    Single<ListMovieResult> getSimilarMovies(@Path("movie_id") long movieId);
 
     @GET("movie/{movie_id}/videos")
-    Observable<ListVideoResult> getMovieVideos(@Path("movie_id") long movieId);
+    Single<ListVideoResult> getMovieVideos(@Path("movie_id") long movieId);
 }

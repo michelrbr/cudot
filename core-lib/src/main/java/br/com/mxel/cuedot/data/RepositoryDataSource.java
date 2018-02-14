@@ -6,12 +6,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import br.com.mxel.cuedot.data.local.ILocalDataSource;
-import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
 import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
 import br.com.mxel.cuedot.data.remote.model.ListVideoResult;
-import br.com.mxel.cuedot.data.remote.IRemoteDataSource;
 import br.com.mxel.cuedot.data.remote.model.Movie;
-import io.reactivex.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 /**
@@ -29,34 +29,37 @@ public class RepositoryDataSource {
         _localData = localData;
     }
 
-    public Observable<List<IMovie>> getFavoriteMoviesList() {
+    public Maybe<List<Movie>> getFavoriteMoviesList() {
         return _localData.getFavoriteMoviesList();
     }
 
-    public Single<Void> addMovieToFavorites(IMovie movie) {
+    public Completable addMovieToFavorites(Movie movie) {
         return _localData.insertMovieToFavorites(movie);
     }
 
-    public Single<Void> removeMovieFromFavorites(long movieId) {
+    public Completable removeMovieFromFavorites(long movieId) {
         return _localData.removeMovieFromFavorite(movieId);
     }
 
-    public Observable<ListMovieResult> getMoviesOrderBy(String orderBy, int page) {
+    public Single<ListMovieResult> getMoviesOrderBy(String orderBy, int page) {
         return _remoteData.getMoviesOrderBy(orderBy, page);
     }
 
-    public Observable<Movie> getMovie(long movieId) {
+    public Single<Movie> getMovie(long movieId) {
 
         // Check local data source before request remote one
-        return _remoteData.getMovie(movieId);
+        return Single
+                .concat(_localData.getMovie(movieId), _remoteData.getMovie(movieId))
+                .filter(movie -> movie.getId() != 0)
+                .firstOrError();
     }
 
-    public Observable<ListVideoResult> getMovieVideos(long movieId) {
+    public Single<ListVideoResult> getMovieVideos(long movieId) {
 
         return _remoteData.getMovieVideos(movieId);
     }
 
-    public Observable<ListMovieResult> getSimilarMovies(long movieId) {
+    public Single<ListMovieResult> getSimilarMovies(long movieId) {
         
         return _remoteData.getSimilarMovies(movieId);
     }

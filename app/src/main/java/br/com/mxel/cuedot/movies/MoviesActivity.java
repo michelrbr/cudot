@@ -62,13 +62,14 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
                 .build()
                 .inject(this);
 
+        _presenter.bind(this);
+
         setupView();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        _presenter.bind(this);
+    protected void onRestart() {
+        super.onRestart();
     }
 
     @Override
@@ -168,6 +169,9 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
                 String ordering;
                 switch (position) {
+                    case 0:
+                        ordering = CueDotConstants.ORDER_BY_POPULAR;
+                        break;
                     case 1:
                         ordering = CueDotConstants.ORDER_BY_TOP_RATED;
                         break;

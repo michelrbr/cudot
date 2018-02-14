@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 
@@ -22,6 +23,7 @@ import br.com.mxel.cuedot.data.model.IMovieVideo;
 import br.com.mxel.cuedot.data.remote.model.Movie;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class MovieDetailActivity extends AppCompatActivity implements IMovieDetailView {
@@ -155,11 +157,16 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void markAsFavorite() {
-
+        ((Button)findViewById(R.id.favorite_button)).setText("Remove from favorite");
     }
 
     @Override
     public void unmarkAsFavorite() {
+        ((Button)findViewById(R.id.favorite_button)).setText("Add to favorite");
+    }
 
+    @OnClick(R.id.favorite_button)
+    public void toggleFavorite(View view) {
+        _presenter.toggleFavorite();
     }
 }

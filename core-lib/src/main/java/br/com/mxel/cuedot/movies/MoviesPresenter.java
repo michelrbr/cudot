@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import br.com.mxel.cuedot.data.RepositoryDataSource;
 import br.com.mxel.cuedot.data.model.IMovie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by michelribeiro on 03/08/17.
@@ -89,7 +89,7 @@ public class MoviesPresenter {
         }
     }
 
-    private Observable<List<IMovie>> loadMovies(){
+    private Single<List<IMovie>> loadMovies(){
         return _repository.getMoviesOrderBy(_currentOrder, _currentPage)
                 .map(listResult -> {
                     _currentPage = listResult.page;

@@ -1,7 +1,7 @@
 package br.com.mxel.cuedot.movieDetail;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.model.IMovie;
+import br.com.mxel.cuedot.data.remote.model.Movie;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
@@ -12,9 +12,9 @@ import dagger.Provides;
 @Module
 public class MovieDetailModule {
 
-    private final IMovie _movie;
+    private final Movie _movie;
 
-    public MovieDetailModule(IMovie movie) {
+    public MovieDetailModule(Movie movie) {
         _movie = movie;
     }
 

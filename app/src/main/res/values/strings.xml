@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CueDot</string>
+    <string name="app_name">Cue dot</string>
     <string name="order_by">Order by:</string>
 
     <array name="order_by_list">

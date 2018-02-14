@@ -1,6 +1,8 @@
 package br.com.mxel.cuedot.data.remote.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
@@ -11,6 +13,7 @@ import br.com.mxel.cuedot.util.CueDotConstants;
  * Created by michelribeiro on 26/07/17.
  */
 
+@DatabaseTable(tableName = "movies")
 public class Movie implements Serializable, IMovie {
 
     /*
@@ -24,31 +27,42 @@ public class Movie implements Serializable, IMovie {
     */
 
     @SerializedName("id")
+    @DatabaseField(columnName = "id", id = true)
     private long _id;
 
+    @DatabaseField(columnName = "title")
     @SerializedName("title")
     private String _title;
 
+    @DatabaseField(columnName = "poster_path")
     @SerializedName("poster_path")
     private String _posterPath;
 
+    @DatabaseField(columnName = "backdrop_path")
     @SerializedName("backdrop_path")
     private String _backdropPath;
 
+    @DatabaseField(columnName = "overview")
     @SerializedName("overview")
     private String _synopsis;
 
+    @DatabaseField(columnName = "vote_average")
     @SerializedName("vote_average")
     private float _rating;
 
+    @DatabaseField(columnName = "release_date")
     @SerializedName("release_date")
     private String _releaseDate;
 
+    @DatabaseField(columnName = "homepage")
     @SerializedName("homepage")
     private String _homepage;
 
     @SerializedName("video")
     private boolean _video;
+
+    @DatabaseField(columnName = "is_favorite")
+    private boolean _isFavorite;
 
     @Override
     public long getId() {
@@ -144,5 +158,13 @@ public class Movie implements Serializable, IMovie {
     @Override
     public void setVideo(boolean video) {
         this._video = video;
+    }
+
+    public boolean isFavorite() {
+        return _isFavorite;
+    }
+
+    public void setIsFavorite(boolean _isFavorite) {
+        this._isFavorite = _isFavorite;
     }
 }

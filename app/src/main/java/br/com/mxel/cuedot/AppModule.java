@@ -41,4 +41,16 @@ public class AppModule {
     public ISchedulerProvider provideScheduler() {
         return new AppSchedulerProvider();
     }
+
+    @Provides
+    @Named("databaseName")
+    public String provideDatabaseName() {
+        return "cuedot.sqlite";
+    }
+
+    @Provides
+    @Named("databaseVersion")
+    public int provideDatabaseVersion() {
+        return 1;
+    }
 }
