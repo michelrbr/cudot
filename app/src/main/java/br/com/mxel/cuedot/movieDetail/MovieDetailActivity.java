@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class MovieDetailActivity extends AppCompatActivity implements IMovieDetailView {
 
@@ -72,28 +73,34 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
                     .movieDetailModule(new MovieDetailModule(movie))
                     .build()
                     .inject(this);
+
+            _presenter.bind(this);
+            _presenter.fetchMovieDetails();
         } catch (NullPointerException npe) {
             onBackPressed();
         }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        _presenter.bind(this);
-        _presenter.fetchMovieDetails();
+    protected void onRestart() {
+        super.onRestart();
+        if (!_presenter.isViewBound()) {
+            _presenter.bind(this);
+        }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onSaveInstanceState(Bundle outState) {
         _presenter.unbind();
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onDestroy() {
+        if(_presenter.isViewBound()) {
+            _unbinder.unbind();
+        }
         super.onDestroy();
-        _unbinder.unbind();
     }
 
     @Override
@@ -125,6 +132,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void showMovieError(Throwable error) {
+        Timber.e(error);
         errorTextView.setVisibility(View.VISIBLE);
         errorTextView.setText(error.getMessage());
     }
@@ -146,7 +154,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void showVideosError(Throwable error) {
-
+        Timber.e(error);
     }
 
     @Override

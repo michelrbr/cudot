@@ -29,8 +29,8 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
         super(context, databaseName, factory, databaseVersion);
         try {
             movieDao = getDao(Movie.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException error) {
+            Timber.e(error, "Unable to create movie dao");
         }
     }
 
@@ -38,7 +38,6 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, Movie.class);
-
         } catch (SQLException error) {
             Timber.e(error, "Unable to create database");
         }
@@ -67,10 +66,13 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
 
         try {
             List<Movie> list = movieDao.queryForAll();
-            return Maybe.just(list);
+            if(list != null) {
+                return Maybe.just(list);
+            } else {
+                return Maybe.empty();
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-            return Maybe.empty();
+            return Maybe.error(e);
         }
     }
 
@@ -78,14 +80,13 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
     public Single<Movie> getMovie(int movieId) {
 
         try {
-            Movie movie = movieDao.queryBuilder().where().eq("id", movieId).queryForFirst();
+            Movie movie = movieDao.queryForId(movieId);
             if(movie != null) {
                 return Single.just(movie);
             } else {
                 return Single.just(new Movie());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             return Single.error(e);
         }
     }
@@ -98,7 +99,6 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
             movieDao.create(movie);
             return Completable.complete();
         } catch (SQLException e) {
-            e.printStackTrace();
             return Completable.error(e);
         }
     }
@@ -117,7 +117,6 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
             return Completable.error(e);
         }
     }

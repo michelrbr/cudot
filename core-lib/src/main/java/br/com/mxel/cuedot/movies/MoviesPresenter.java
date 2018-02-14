@@ -41,6 +41,10 @@ public class MoviesPresenter {
         _view = null;
     }
 
+    public boolean isViewBound() {
+        return _view != null;
+    }
+
     public void getMoviesOrderedBy(String order) {
 
         if(_currentOrder == null || !_currentOrder.equals(order)) {

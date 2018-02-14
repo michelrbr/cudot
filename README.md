@@ -8,3 +8,5 @@ https://hackernoon.com/yet-another-mvp-article-part-1-lets-get-to-know-the-proje
 ### Google architecture ###
 https://github.com/googlesamples/android-architecture
 
+### MVP Binding ###
+https://proandroiddev.com/where-to-unbind-the-presenter-e50ce343d4ce

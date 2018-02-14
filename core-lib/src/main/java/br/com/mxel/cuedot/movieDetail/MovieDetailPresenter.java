@@ -35,6 +35,10 @@ public class MovieDetailPresenter {
         _view = null;
     }
 
+    public boolean isViewBound() {
+        return _view != null;
+    }
+
     public void fetchMovieDetails() {
 
         if(_view != null) {
@@ -103,7 +107,6 @@ public class MovieDetailPresenter {
                         _view.markAsFavorite();
                     }
                 }, throwable -> {
-                    throwable.printStackTrace();
                     if(_view != null) {
                         _view.unmarkAsFavorite();
                     }
@@ -118,7 +121,6 @@ public class MovieDetailPresenter {
                         _view.unmarkAsFavorite();
                     }
                 }, throwable -> {
-                    throwable.printStackTrace();
                     if(_view != null) {
                         _view.markAsFavorite();
                     }

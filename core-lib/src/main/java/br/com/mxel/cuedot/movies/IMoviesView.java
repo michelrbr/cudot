@@ -11,9 +11,14 @@ import br.com.mxel.cuedot.data.model.Movie;
 public interface IMoviesView {
 
     void showLoading();
+
     void hideLoading();
+
     void setEnableLoadMore(boolean enabled);
+
     void showError(Throwable throwable);
+
     void hideError();
+
     void showMoviesList(List<Movie> movies);
 }

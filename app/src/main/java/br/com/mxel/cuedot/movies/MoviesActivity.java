@@ -70,18 +70,23 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     @Override
     protected void onRestart() {
         super.onRestart();
+        if (!_presenter.isViewBound()) {
+            _presenter.bind(this);
+        }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onSaveInstanceState(Bundle outState) {
         _presenter.unbind();
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onDestroy() {
+        if(_presenter.isViewBound()) {
+            _unbinder.unbind();
+        }
         super.onDestroy();
-        _unbinder.unbind();
     }
 
     @Override
