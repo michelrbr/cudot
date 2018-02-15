@@ -47,13 +47,13 @@ public class MovieDetailPresenterTest {
                 .thenReturn(Schedulers.computation());
 
         // mock movie calls
-        when(_movie.getId()).thenReturn(Long.valueOf(1));
+        when(_movie.getId()).thenReturn(1);
         when(_movie.getTitle()).thenReturn("Testing movie");
 
         // mock repository calls
-        when(_repository.getMovie(any(Long.class))).thenReturn(Single.just(_movie));
+        when(_repository.getMovie(any(Integer.class))).thenReturn(Single.just(_movie));
         when(_repository.addMovieToFavorites(any(Movie.class))).thenReturn(completable);
-        when(_repository.removeMovieFromFavorites(any(Long.class))).thenReturn(completable);
+        when(_repository.removeMovieFromFavorites(any(Integer.class))).thenReturn(completable);
 
         _presenter = new MovieDetailPresenter(_repository, _scheduler, _movie);
         _presenter.bind(_view);
@@ -66,7 +66,7 @@ public class MovieDetailPresenterTest {
 
         InOrder viewOrder = Mockito.inOrder(_view, _repository, _scheduler);
         viewOrder.verify(_view).showMovieLoading(true);
-        viewOrder.verify(_repository).getMovie(any(Long.class));
+        viewOrder.verify(_repository).getMovie(any(Integer.class));
         viewOrder.verify(_scheduler).mainThread();
         viewOrder.verify(_view).showMovieLoading(false);
         viewOrder.verify(_view).showMovie(_movie);
