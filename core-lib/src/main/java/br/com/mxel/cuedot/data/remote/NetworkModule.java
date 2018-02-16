@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -78,11 +79,13 @@ public class NetworkModule {
     @Provides
     @Singleton
     public OkHttpClient provideOkHttpClient(
+            Cache cache,
             HttpLoggingInterceptor loggingInterceptor,
             @Named("insertKeyInterceptor") Interceptor insertKeyInterceptor,
             @Named("isDebug") boolean isDebug) {
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
+                .cache(cache)
                 .addInterceptor(insertKeyInterceptor)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)

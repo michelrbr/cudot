@@ -1,5 +1,7 @@
 package br.com.mxel.cuedot;
 
+import java.io.File;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -7,6 +9,7 @@ import br.com.mxel.cuedot.util.AppSchedulerProvider;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 
 /**
  * Created by michelribeiro on 01/08/17.
@@ -45,12 +48,19 @@ public class AppModule {
     @Provides
     @Named("databaseName")
     public String provideDatabaseName() {
-        return "cuedot.sqlite";
+        return "cuedot.db";
     }
 
     @Provides
     @Named("databaseVersion")
     public int provideDatabaseVersion() {
         return 1;
+    }
+
+    @Provides
+    @Singleton
+    public Cache provideOkHttpCache(@Named("cacheDir") File cacheDir) {
+        int cacheSize = 10 * 1024 * 1024; // 10 MB
+        return new Cache(cacheDir, cacheSize);
     }
 }

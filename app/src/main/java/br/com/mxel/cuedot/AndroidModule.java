@@ -3,6 +3,9 @@ package br.com.mxel.cuedot;
 import android.app.Application;
 import android.content.Context;
 
+import java.io.File;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -24,5 +27,11 @@ public class AndroidModule {
     @Singleton
     public Context provideContext() {
         return _application;
+    }
+
+    @Provides
+    @Named("cacheDir")
+    public File provideCacheDir(Context context) {
+        return context.getCacheDir();
     }
 }
