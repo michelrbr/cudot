@@ -66,6 +66,8 @@ public class NetworkModule {
             HttpUrl originalHttpUrl = originalRequest.url();
             HttpUrl newHttpUrl = originalHttpUrl.newBuilder()
                     .setQueryParameter(API_QUERY, apiKey)
+                    // https://developers.themoviedb.org/3/getting-started/languages
+                    //.addQueryParameter("language", "pt-BR")
                     .build();
 
             Request newRequest = originalRequest.newBuilder()

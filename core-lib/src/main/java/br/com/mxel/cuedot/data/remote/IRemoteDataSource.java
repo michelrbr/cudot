@@ -16,8 +16,11 @@ public interface IRemoteDataSource {
 
     @GET("movie/{order_by}")
     Single<ListMovieResult> getMoviesOrderBy(@Path("order_by") String orderBy,
-                                                 @Query("page") int page);
+                                             @Query("page") int page);
 
+    // https://developers.themoviedb.org/3/getting-started/append-to-response
+    // Append videos and images to response (But it comes on ListVideoResult)
+    // &append_to_response=videos,images
     @GET("movie/{movie_id}")
     Single<Movie> getMovie(@Path("movie_id") long movieId);
 
@@ -26,4 +29,11 @@ public interface IRemoteDataSource {
 
     @GET("movie/{movie_id}/videos")
     Single<ListVideoResult> getMovieVideos(@Path("movie_id") long movieId);
+
+    // https://developers.themoviedb.org/3/search/search-movies
+    // https://developers.themoviedb.org/3/search/search-tv-shows
+    /*
+    @GET("search/{type}")
+    Single<ListMovieResult> search(@Path("type") String type,
+                                   @Query(value = "query", encoded = true) String query);*/
 }
