@@ -45,6 +45,35 @@ public class MoviesPresenter {
         return _view != null;
     }
 
+    public void getFavoriteMovies(){
+        _currentOrder = null;
+        _currentPage = 1;
+        _totalPages = 1;
+        if(_movies != null) _movies.clear();
+        if (_view != null) {
+            _view.setEnableLoadMore(false);
+            _view.showLoading();
+        }
+        _repository.getFavoriteMoviesList()
+                .subscribeOn(_scheduler.backgroundThread())
+                .observeOn(_scheduler.mainThread())
+                .subscribe(movies -> {
+                    _totalResults = movies.size();
+                    if (_view != null) {
+                        _view.hideLoading();
+                        _view.showMoviesList(movies);
+                    }
+                }, throwable -> {
+                    if(_view != null) {
+                        _view.showError(throwable);
+                    }
+                }, () -> {
+                    if(_view != null) {
+                        _view.showError(new Throwable("Empty list"));
+                    }
+        });
+    }
+
     public void getMoviesOrderedBy(String order) {
 
         if(_currentOrder == null || !_currentOrder.equals(order)) {
