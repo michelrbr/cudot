@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,7 @@ import timber.log.Timber;
 
 public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
+    private static final String SPINNER_SELECTION = "spinner_selection";
     //Views
     @BindView(R.id.movies_recycler_view)
     RecyclerView moviesRecyclerView;
@@ -48,6 +50,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
     private Unbinder _unbinder;
     private boolean _loadMore;
+    private int _currentSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,10 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
 
         _presenter.bind(this);
 
+        if(savedInstanceState != null) {
+            _currentSelection = savedInstanceState.getInt(SPINNER_SELECTION);
+        }
+
         setupView();
     }
 
@@ -76,8 +83,20 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(_currentSelection == 4) {
+            _presenter.getFavoriteMovies();
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         _presenter.unbind();
+
+        if(orderingSpinner != null) {
+            outState.putInt(SPINNER_SELECTION, orderingSpinner.getSelectedItemPosition());
+        }
         super.onSaveInstanceState(outState);
     }
 
@@ -168,11 +187,14 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
         orderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         orderingSpinner.setAdapter(orderAdapter);
+
+        orderingSpinner.setSelection(_currentSelection);
         orderingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                String ordering;
+                String ordering = "";
+                _currentSelection = position;
                 switch (position) {
                     case 0:
                         ordering = CueDotConstants.ORDER_BY_POPULAR;
@@ -186,11 +208,16 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
                     case 3:
                         ordering = CueDotConstants.ORDER_BY_UPCOMING;
                         break;
+                    case 4:
+                        _presenter.getFavoriteMovies();
+                        break;
                     default:
                         ordering = CueDotConstants.ORDER_BY_POPULAR;
                 }
 
-                _presenter.getMoviesOrderedBy(ordering);
+                if(!TextUtils.isEmpty(ordering)) {
+                    _presenter.getMoviesOrderedBy(ordering);
+                }
             }
 
             @Override

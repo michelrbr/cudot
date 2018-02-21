@@ -66,7 +66,7 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
 
         try {
             List<Movie> list = movieDao.queryForAll();
-            if(list != null) {
+            if(list != null && list.size() > 0) {
                 return Maybe.just(list);
             } else {
                 return Maybe.empty();
