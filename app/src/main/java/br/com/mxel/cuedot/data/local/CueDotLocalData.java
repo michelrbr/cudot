@@ -99,24 +99,26 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
             movieDao.create(movie);
             return Completable.complete();
         } catch (SQLException e) {
+            movie.setIsFavorite(false);
+            return Completable.error(e);
+        } catch (NullPointerException e) {
             return Completable.error(e);
         }
     }
 
     @Override
-    public Completable removeMovieFromFavorite(int movieId) {
+    public Completable removeMovieFromFavorite(Movie movie) {
         try {
 
-            Movie movie = movieDao.queryForId(movieId);
-            if(movie != null) {
+            if(movieDao.queryForId(movie.getId()) != null) {
+                movieDao.deleteById(movie.getId());
                 movie.setIsFavorite(false);
-                movieDao.delete(movie);
                 return Completable.complete();
             } else {
                 return Completable.error(new Exception("Movie not found"));
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return Completable.error(e);
         }
     }

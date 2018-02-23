@@ -16,5 +16,5 @@ public interface ILocalDataSource {
     Maybe<List<Movie>> getFavoriteMoviesList();
     Single<Movie> getMovie(int movieId);
     Completable insertMovieToFavorites(Movie movie);
-    Completable removeMovieFromFavorite(int movieId);
+    Completable removeMovieFromFavorite(Movie movie);
 }

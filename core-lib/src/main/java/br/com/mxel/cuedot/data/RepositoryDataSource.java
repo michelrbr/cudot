@@ -37,8 +37,8 @@ public class RepositoryDataSource {
         return _localData.insertMovieToFavorites(movie);
     }
 
-    public Completable removeMovieFromFavorites(int movieId) {
-        return _localData.removeMovieFromFavorite(movieId);
+    public Completable removeMovieFromFavorites(Movie movie) {
+        return _localData.removeMovieFromFavorite(movie);
     }
 
     public Single<ListMovieResult> getMoviesOrderBy(String orderBy, int page) {

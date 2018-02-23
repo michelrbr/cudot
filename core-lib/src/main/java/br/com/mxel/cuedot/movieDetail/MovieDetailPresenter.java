@@ -101,6 +101,7 @@ public class MovieDetailPresenter {
     public void addToFavorites() {
 
         _repository.addMovieToFavorites(_movie)
+                .subscribeOn(_scheduler.backgroundThread())
                 .observeOn(_scheduler.mainThread())
                 .subscribe(() -> {
                     if(_view != null) {
@@ -108,13 +109,15 @@ public class MovieDetailPresenter {
                     }
                 }, throwable -> {
                     if(_view != null) {
+                        throwable.printStackTrace();
                         _view.unmarkAsFavorite();
                     }
                 });
     }
 
     public void removeFromFavorites() {
-        _repository.removeMovieFromFavorites(_movie.getId())
+        _repository.removeMovieFromFavorites(_movie)
+                .subscribeOn(_scheduler.backgroundThread())
                 .observeOn(_scheduler.mainThread())
                 .subscribe(() -> {
                     if(_view != null) {
@@ -122,6 +125,7 @@ public class MovieDetailPresenter {
                     }
                 }, throwable -> {
                     if(_view != null) {
+                        throwable.printStackTrace();
                         _view.markAsFavorite();
                     }
                 });
