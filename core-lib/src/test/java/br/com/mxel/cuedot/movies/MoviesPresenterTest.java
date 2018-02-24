@@ -10,11 +10,10 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 
 import br.com.mxel.cuedot.data.RepositoryDataSource;
-import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
 import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.data.remote.model.ListMovieResult;
 import br.com.mxel.cuedot.util.CueDotConstants;
 import br.com.mxel.cuedot.util.ISchedulerProvider;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -53,11 +52,15 @@ public class MoviesPresenterTest {
     @Test
     public void getMoviesByOrderTest() {
 
-        Movie movie = new Movie();
-        movie.setTitle("Testing movie");
+        Movie movie1 = new Movie();
+        movie1.setTitle("Testing movie one");
 
-        ArrayList listArr = new ArrayList(1);
-        listArr.add(movie);
+        Movie movie2 = new Movie();
+        movie2.setTitle("Testing movie two");
+
+        ArrayList listArr = new ArrayList();
+        listArr.add(movie1);
+        listArr.add(movie2);
 
         ListMovieResult list = new ListMovieResult();
         list.page = 1;

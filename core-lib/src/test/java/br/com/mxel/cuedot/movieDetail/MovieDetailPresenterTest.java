@@ -38,8 +38,6 @@ public class MovieDetailPresenterTest {
     public void setupPresenter() {
         MockitoAnnotations.initMocks(this);
 
-        Completable completable = Completable.complete();
-
         // mock scheduler calls
         when(_scheduler.mainThread())
                 .thenReturn(Schedulers.computation());
@@ -50,11 +48,6 @@ public class MovieDetailPresenterTest {
         when(_movie.getId()).thenReturn(1);
         when(_movie.getTitle()).thenReturn("Testing movie");
 
-        // mock repository calls
-        when(_repository.getMovie(any(Integer.class))).thenReturn(Single.just(_movie));
-        when(_repository.addMovieToFavorites(any(Movie.class))).thenReturn(completable);
-        when(_repository.removeMovieFromFavorites(any(Integer.class))).thenReturn(completable);
-
         _presenter = new MovieDetailPresenter(_repository, _scheduler, _movie);
         _presenter.bind(_view);
     }
@@ -62,9 +55,12 @@ public class MovieDetailPresenterTest {
     @Test
     public void fetchMovieDetailTest() {
 
-        _presenter.fetchMovieDetails();
+        // mock repository calls
+        when(_repository.getMovie(any(Integer.class))).thenReturn(Single.just(_movie));
 
         InOrder viewOrder = Mockito.inOrder(_view, _repository, _scheduler);
+        _presenter.fetchMovieDetails();
+
         viewOrder.verify(_view).showMovieLoading(true);
         viewOrder.verify(_repository).getMovie(any(Integer.class));
         viewOrder.verify(_scheduler).mainThread();
@@ -75,10 +71,14 @@ public class MovieDetailPresenterTest {
     @Test
     public void addToFavoriteTest() {
 
-        _presenter.addToFavorites();
+        // mock repository calls
+        when(_repository.addMovieToFavorites(any(Movie.class))).thenReturn(Completable.complete());
 
         InOrder viewOrder = Mockito.inOrder(_view, _repository, _scheduler);
-        viewOrder.verify(_repository).addMovieToFavorites(any(Movie.class));
+        _presenter.addToFavorites();
+
+        viewOrder.verify(_repository).addMovieToFavorites(_movie);
+        viewOrder.verify(_scheduler).backgroundThread();
         viewOrder.verify(_scheduler).mainThread();
         viewOrder.verify(_view).markAsFavorite();
     }
@@ -86,10 +86,14 @@ public class MovieDetailPresenterTest {
     @Test
     public void removeToFavoriteTest() {
 
-        _presenter.removeFromFavorites();
+        // mock repository calls
+        when(_repository.removeMovieFromFavorites(any(Movie.class))).thenReturn(Completable.complete());
 
         InOrder viewOrder = Mockito.inOrder(_view, _repository, _scheduler);
-        viewOrder.verify(_repository).removeMovieFromFavorites(_movie.getId());
+        _presenter.removeFromFavorites();
+
+        viewOrder.verify(_repository).removeMovieFromFavorites(_movie);
+        viewOrder.verify(_scheduler).backgroundThread();
         viewOrder.verify(_scheduler).mainThread();
         viewOrder.verify(_view).unmarkAsFavorite();
     }
