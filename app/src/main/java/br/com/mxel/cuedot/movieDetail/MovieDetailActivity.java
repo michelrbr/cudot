@@ -1,10 +1,14 @@
 package br.com.mxel.cuedot.movieDetail;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -49,6 +53,9 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     private Unbinder _unbinder;
 
+    private MenuItem _favoriteButton;
+    private boolean _isFavorite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +89,31 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_movie_detail, menu);
+        _favoriteButton = menu.findItem(R.id.action_favorite);
+        setIsFavorite(_isFavorite);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+
+                toggleFavorite();
+                return true;
+            case android.R.id.home:
+
+                onBackPressed();
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
         if (!_presenter.isViewBound()) {
@@ -98,6 +130,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     @Override
     protected void onDestroy() {
         if(_presenter.isViewBound()) {
+            _presenter.unbind();
             _unbinder.unbind();
         }
         super.onDestroy();
@@ -128,6 +161,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         descriptionTextView.setText(movie.getSynopsis());
         releaseDateTextView.setText(movie.getReleaseDate());
         ratingBar.setRating(movie.getRating() / 2);
+        setIsFavorite(movie.isFavorite());
     }
 
     @Override
@@ -164,16 +198,30 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void markAsFavorite() {
-        ((Button)findViewById(R.id.favorite_button)).setText("Remove from favorite");
+
+        if(!_isFavorite) {
+            setIsFavorite(true);
+        }
     }
 
     @Override
     public void unmarkAsFavorite() {
-        ((Button)findViewById(R.id.favorite_button)).setText("Add to favorite");
+        if(_isFavorite) {
+            setIsFavorite(false);
+        }
     }
 
-    @OnClick(R.id.favorite_button)
-    public void toggleFavorite(View view) {
+    private void toggleFavorite() {
+        setIsFavorite(!_isFavorite);
         _presenter.toggleFavorite();
+    }
+
+    private void setIsFavorite(boolean fav) {
+
+        _isFavorite = fav;
+        if(_favoriteButton != null) {
+            int icon = (_isFavorite) ? R.drawable.ic_red_heart_24dp : R.drawable.ic_white_heart_24dp;
+            _favoriteButton.setIcon(icon);
+        }
     }
 }
