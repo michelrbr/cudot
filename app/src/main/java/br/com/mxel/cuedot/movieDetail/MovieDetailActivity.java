@@ -1,7 +1,5 @@
 package br.com.mxel.cuedot.movieDetail;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +8,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 
@@ -26,7 +23,6 @@ import br.com.mxel.cuedot.data.model.Movie;
 import br.com.mxel.cuedot.data.model.MovieVideo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import timber.log.Timber;
 

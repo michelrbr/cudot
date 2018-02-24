@@ -1,8 +1,8 @@
 ext {
     //Android
     androidSupportVersion = '27.0.2'
-    rxAndroidVersion = "2.0.1"
-    timberVersion = "4.6.0"
+    rxAndroidVersion = "2.0.2"
+    timberVersion = "4.6.1"
     picassoVersion = "2.5.2"
     butterknifeVersion = "8.8.1"
 
@@ -12,11 +12,11 @@ ext {
     mockitoVersion = '2.10.0'
 
     //Java
-    rxjavaVersion = "2.1.8"
+    rxjavaVersion = "2.1.10"
     okhttpVersion = "3.9.1"
     retrofitVersion = "2.3.0"
     daggerVersion = "2.14.1"
-    ormLiteVersion = "5.0"
+    ormLiteVersion = "5.1"
 
     libraries = [
             appcompat : "com.android.support:appcompat-v7:$androidSupportVersion",

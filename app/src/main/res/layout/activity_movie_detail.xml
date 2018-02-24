@@ -23,6 +23,7 @@
             android:id="@+id/error_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
             android:gravity="center_horizontal"
             android:textSize="@dimen/x_large_font"
             android:textStyle="bold"
@@ -32,6 +33,7 @@
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/backdrop_image"
             android:layout_width="match_parent"
+            android:contentDescription="@string/movie_backdrop"
             android:layout_height="@dimen/backdrop_height"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic"/>
@@ -41,8 +43,9 @@
             android:layout_height="wrap_content">
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/release_date_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/rating"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/normal_font"
                 android:layout_margin="@dimen/normal_margin"

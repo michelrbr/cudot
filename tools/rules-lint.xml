@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
     <issue id="GoogleAppIndexingWarning" severity="ignore" />
+    <issue id="RtlSymmetry" severity="ignore" />
+    <issue id="ObsoleteLintCustomCheck" severity="ignore" />
+    <issue id="InvalidPackage">
+        <ignore regexp="ormlite-core-5.1" />
+    </issue>
 </lint>
