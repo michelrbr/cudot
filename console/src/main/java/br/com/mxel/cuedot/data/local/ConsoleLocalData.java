@@ -28,7 +28,7 @@ public class ConsoleLocalData implements ILocalDataSource {
     }
 
     @Override
-    public Completable removeMovieFromFavorite(int movieId) {
+    public Completable removeMovieFromFavorite(Movie movie) {
         return null;
     }
 }
