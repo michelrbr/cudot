@@ -26,9 +26,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private List<Movie> _data;
 
-    public MoviesAdapter() {
-    }
-
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_movie, parent, false);
@@ -40,7 +37,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
             Timber.tag("MoviesAdapter").d("Movie id: %d", movie.getId());
 
             Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
-            intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, (Movie)movie);
+            intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
             v.getContext().startActivity(intent);
         });
         return holder;
@@ -62,7 +59,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public int getItemCount() {
-        return (_data != null) ? _data.size() : 0;
+        return (_data == null) ? 0 : _data.size();
     }
 
     public void setData(List<Movie> data) {

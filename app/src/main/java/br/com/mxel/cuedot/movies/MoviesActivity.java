@@ -24,10 +24,13 @@ import br.com.mxel.cuedot.util.CueDotConstants;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
-public class MoviesActivity extends AppCompatActivity implements IMoviesView{
+public class MoviesActivity extends AppCompatActivity
+        implements
+        IMoviesView{
 
     private static final String SPINNER_SELECTION = "spinner_selection";
     //Views
@@ -166,18 +169,7 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
-
-                    if(_loadMore) {
-                        _presenter.loadMore();
-                    }
-                }
+                checkScroll(recyclerView, dx, dy);
             }
         });
 
@@ -189,41 +181,48 @@ public class MoviesActivity extends AppCompatActivity implements IMoviesView{
         orderingSpinner.setAdapter(orderAdapter);
 
         orderingSpinner.setSelection(_currentSelection);
-        orderingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    }
 
-                String ordering = "";
-                _currentSelection = position;
-                switch (position) {
-                    case 0:
-                        ordering = CueDotConstants.ORDER_BY_POPULAR;
-                        break;
-                    case 1:
-                        ordering = CueDotConstants.ORDER_BY_TOP_RATED;
-                        break;
-                    case 2:
-                        ordering = CueDotConstants.ORDER_BY_NOW_PLAYING;
-                        break;
-                    case 3:
-                        ordering = CueDotConstants.ORDER_BY_UPCOMING;
-                        break;
-                    case 4:
-                        _presenter.getFavoriteMovies();
-                        break;
-                    default:
-                        ordering = CueDotConstants.ORDER_BY_POPULAR;
-                }
+    void checkScroll(RecyclerView recyclerView, int dx, int dy) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-                if(!TextUtils.isEmpty(ordering)) {
-                    _presenter.getMoviesOrderedBy(ordering);
-                }
-            }
+        int visibleItemCount = layoutManager.getChildCount();
+        int totalItemCount = layoutManager.getItemCount();
+        int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        if (_loadMore && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
 
-            }
-        });
+            _presenter.loadMore();
+        }
+    }
+
+    @OnItemSelected(R.id.ordering_spinner)
+    void selectCurrentOrder(AdapterView<?> parent, View view, int position, long id) {
+        String ordering = "";
+        _currentSelection = position;
+        switch (position) {
+            case 0:
+                ordering = CueDotConstants.ORDER_BY_POPULAR;
+                break;
+            case 1:
+                ordering = CueDotConstants.ORDER_BY_TOP_RATED;
+                break;
+            case 2:
+                ordering = CueDotConstants.ORDER_BY_NOW_PLAYING;
+                break;
+            case 3:
+                ordering = CueDotConstants.ORDER_BY_UPCOMING;
+                break;
+            case 4:
+                _presenter.getFavoriteMovies();
+                break;
+            default:
+                ordering = CueDotConstants.ORDER_BY_POPULAR;
+                break;
+        }
+
+        if(!TextUtils.isEmpty(ordering)) {
+            _presenter.getMoviesOrderedBy(ordering);
+        }
     }
 }

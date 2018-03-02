@@ -96,15 +96,13 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.action_favorite:
+        int i = item.getItemId();
+        if (i == R.id.action_favorite) {
+            toggleFavorite();
+            return true;
+        } else if (i == android.R.id.home) {
+            onBackPressed();
 
-                toggleFavorite();
-                return true;
-            case android.R.id.home:
-
-                onBackPressed();
-            break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -174,12 +172,12 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void showVideosLoading(boolean show) {
-
+        Timber.d("Show videos: %b", show);
     }
 
     @Override
     public void showVideos(List<? extends MovieVideo> movieVideos) {
-
+        Timber.d("Movie videos count: %d", movieVideos.size());
     }
 
     @Override
@@ -189,7 +187,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     @Override
     public void hideVideosError() {
-
+        Timber.d("Hide videos error message");
     }
 
     @Override

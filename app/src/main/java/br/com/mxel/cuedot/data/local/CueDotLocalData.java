@@ -66,10 +66,10 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
 
         try {
             List<Movie> list = movieDao.queryForAll();
-            if(list != null && list.size() > 0) {
-                return Maybe.just(list);
-            } else {
+            if(list == null || list.isEmpty()) {
                 return Maybe.empty();
+            } else {
+                return Maybe.just(list);
             }
         } catch (SQLException e) {
             return Maybe.error(e);
@@ -81,10 +81,10 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
 
         try {
             Movie movie = movieDao.queryForId(movieId);
-            if(movie != null) {
-                return Single.just(movie);
-            } else {
+            if(movie == null) {
                 return Single.just(new Movie());
+            } else {
+                return Single.just(movie);
             }
         } catch (SQLException e) {
             return Single.error(e);
@@ -110,12 +110,14 @@ public class CueDotLocalData extends OrmLiteSqliteOpenHelper implements ILocalDa
     public Completable removeMovieFromFavorite(Movie movie) {
         try {
 
-            if(movieDao.queryForId(movie.getId()) != null) {
+            if(movieDao.queryForId(movie.getId()) == null) {
+
+                return Completable.error(new Exception("Movie not found"));
+            } else {
+
                 movieDao.deleteById(movie.getId());
                 movie.setIsFavorite(false);
                 return Completable.complete();
-            } else {
-                return Completable.error(new Exception("Movie not found"));
             }
 
         } catch (Exception e) {
