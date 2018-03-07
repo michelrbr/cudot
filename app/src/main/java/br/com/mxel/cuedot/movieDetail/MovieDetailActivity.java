@@ -125,8 +125,12 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     protected void onDestroy() {
         if(_presenter.isViewBound()) {
             _presenter.unbind();
+        }
+
+        if(_unbinder != null) {
             _unbinder.unbind();
         }
+
         super.onDestroy();
     }
 

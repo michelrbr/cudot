@@ -1,5 +1,6 @@
 package br.com.mxel.cuedot.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
@@ -19,6 +20,7 @@ import javax.inject.Inject;
 import br.com.mxel.cuedot.CueDotApplication;
 import br.com.mxel.cuedot.R;
 import br.com.mxel.cuedot.data.model.Movie;
+import br.com.mxel.cuedot.movieDetail.MovieDetailActivity;
 import br.com.mxel.cuedot.movies.adapter.MoviesAdapter;
 import br.com.mxel.cuedot.util.CueDotConstants;
 import butterknife.BindArray;
@@ -26,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class MoviesActivity extends AppCompatActivity
@@ -54,6 +57,8 @@ public class MoviesActivity extends AppCompatActivity
     private Unbinder _unbinder;
     private boolean _loadMore;
     private int _currentSelection;
+    private MoviesAdapter _moviesAdapter;
+    private CompositeDisposable _subscriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class MoviesActivity extends AppCompatActivity
                 .moviesModule(new MoviesModule())
                 .build()
                 .inject(this);
+
+        _subscriptions = new CompositeDisposable();
 
         _presenter.bind(this);
 
@@ -106,7 +113,15 @@ public class MoviesActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         if(_presenter.isViewBound()) {
+            _presenter.unbind();
+        }
+
+        if(_unbinder != null) {
             _unbinder.unbind();
+        }
+
+        if(_subscriptions != null && !_subscriptions.isDisposed()) {
+            _subscriptions.dispose();
         }
         super.onDestroy();
     }
@@ -160,9 +175,13 @@ public class MoviesActivity extends AppCompatActivity
 
     private void setupView() {
 
+        _moviesAdapter = new MoviesAdapter();
+
+        _subscriptions.add(_moviesAdapter.asObservable().subscribe(this::showMovieDetails));
+
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         moviesRecyclerView.setHasFixedSize(true);
-        moviesRecyclerView.setAdapter(new MoviesAdapter());
+        moviesRecyclerView.setAdapter(_moviesAdapter);
         moviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -181,6 +200,13 @@ public class MoviesActivity extends AppCompatActivity
         orderingSpinner.setAdapter(orderAdapter);
 
         orderingSpinner.setSelection(_currentSelection);
+    }
+
+    void showMovieDetails(Movie movie) {
+
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
+        startActivity(intent);
     }
 
     void checkScroll(RecyclerView recyclerView, int dx, int dy) {
