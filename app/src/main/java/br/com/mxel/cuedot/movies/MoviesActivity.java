@@ -57,7 +57,6 @@ public class MoviesActivity extends AppCompatActivity
     private Unbinder _unbinder;
     private boolean _loadMore;
     private int _currentSelection;
-    private MoviesAdapter _moviesAdapter;
     private CompositeDisposable _subscriptions;
 
     @Override
@@ -170,18 +169,18 @@ public class MoviesActivity extends AppCompatActivity
         errorTextView.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.VISIBLE);
         ((MoviesAdapter) moviesRecyclerView.getAdapter()).setData(movies);
-
+        moviesRecyclerView.scrollToPosition(0);
     }
 
     private void setupView() {
 
-        _moviesAdapter = new MoviesAdapter();
+        MoviesAdapter moviesAdapter = new MoviesAdapter();
 
-        _subscriptions.add(_moviesAdapter.asObservable().subscribe(this::showMovieDetails));
+        _subscriptions.add(moviesAdapter.asObservable().subscribe(this::showMovieDetails));
 
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         moviesRecyclerView.setHasFixedSize(true);
-        moviesRecyclerView.setAdapter(_moviesAdapter);
+        moviesRecyclerView.setAdapter(moviesAdapter);
         moviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override

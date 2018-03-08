@@ -19,7 +19,7 @@ import io.reactivex.subjects.PublishSubject;
 public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private List<Movie> _data;
-    private PublishSubject<Movie> _notifier = PublishSubject.create();
+    private final PublishSubject<Movie> _notifier = PublishSubject.create();
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +38,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         Movie movie = _data.get(position);
         holder.setMovie(movie);
-
     }
 
     @Override
