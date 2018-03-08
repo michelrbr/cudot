@@ -122,4 +122,9 @@ dependencies {
     implementation rootProject.ext.libraries.ormLiteCore
     implementation rootProject.ext.libraries.ormLite
 
+    // Firebase
+    implementation rootProject.ext.libraries.firebaseCore
 }
+
+apply plugin: 'com.google.gms.google-services'
+
