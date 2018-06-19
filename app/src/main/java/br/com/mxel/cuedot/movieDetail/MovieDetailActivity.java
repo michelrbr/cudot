@@ -153,7 +153,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
         setTitle(movie.getTitle());
 
-        Picasso.with(this)
+        Picasso.get()
                 .load(movie.getBackdropPath())
                 .into(backdropImage);
         descriptionTextView.setText(movie.getSynopsis());

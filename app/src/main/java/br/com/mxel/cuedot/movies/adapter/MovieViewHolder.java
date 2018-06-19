@@ -33,7 +33,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         ((TextView) itemView.findViewById(R.id.movie_title)).setText(movie.getTitle());
         ((TextView) itemView.findViewById(R.id.release_date_text_view)).setText(movie.getReleaseDate());
         ((RatingBar) itemView.findViewById(R.id.rating)).setRating(movie.getRating() / 2);
-        Picasso.with(itemView.getContext())
+        Picasso.get()
                 .load(movie.getPosterPath())
                 //.centerCrop()
                 .into((ImageView) itemView.findViewById(R.id.movie_cover));
