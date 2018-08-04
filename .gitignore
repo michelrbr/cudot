@@ -263,3 +263,5 @@ Temporary Items
 api.properties
 
 # End of https://www.gitignore.io/api/macos,linux,android,intellij,androidstudio
+
+cache/

@@ -23,7 +23,7 @@ public class MainClass {
                 .movieDetailModule(new MovieDetailModule(movie))
                 .build();
             _movieDetailView = new MovieDetailView(movieDetailComponent);
-        });
+        }, Throwable::printStackTrace);
         while (!movies.getIsRunning()) {
 
             if(_movieDetailView != null) {
