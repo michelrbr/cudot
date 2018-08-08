@@ -29,6 +29,7 @@ public class MainClass {
             if(_movieDetailView != null) {
                 if (_movieDetailView.getShouldFinish()) {
                     _movieDetailView = null;
+                    movies.printMovieList();
                     movies.promptUser();
                 } else {
                     _movieDetailView.promptUser();

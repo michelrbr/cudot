@@ -61,11 +61,7 @@ public class MoviesView implements IMoviesView {
     public void showMoviesList(List<Movie> movies) {
 
         _movies = movies;
-        int count = 0;
-        for (Movie m : _movies) {
-            count++;
-            System.out.println(String.valueOf(count) + ": " + m.getTitle() + " (" + m.getId() + ")");
-        }
+        printMovieList();
     }
 
     @Override
@@ -76,6 +72,17 @@ public class MoviesView implements IMoviesView {
     @Override
     public void hideError() {
 
+    }
+
+    public void printMovieList() {
+
+        if(_movies != null) {
+            int count = 0;
+            for (Movie m : _movies) {
+                count++;
+                System.out.println(String.valueOf(count) + ": " + m.getTitle() + " (" + m.getId() + ")");
+            }
+        }
     }
 
     public String promptUser() {
