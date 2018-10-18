@@ -169,7 +169,7 @@ public class MoviesActivity extends AppCompatActivity
         errorTextView.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.VISIBLE);
         ((MoviesAdapter) moviesRecyclerView.getAdapter()).setData(movies);
-        moviesRecyclerView.scrollToPosition(0);
+        //moviesRecyclerView.scrollToPosition(0);
     }
 
     private void setupView() {
@@ -247,6 +247,7 @@ public class MoviesActivity extends AppCompatActivity
         }
 
         if(!TextUtils.isEmpty(ordering)) {
+            moviesRecyclerView.scrollToPosition(0);
             _presenter.getMoviesOrderedBy(ordering);
         }
     }

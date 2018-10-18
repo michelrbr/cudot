@@ -1,6 +1,5 @@
 package br.com.mxel.cuedot.data.local;
 
-import java.util.Collection;
 import java.util.List;
 
 import br.com.mxel.cuedot.data.model.Movie;
