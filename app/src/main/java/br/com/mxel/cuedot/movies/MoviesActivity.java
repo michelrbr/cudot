@@ -8,6 +8,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -107,6 +109,24 @@ public class MoviesActivity extends AppCompatActivity
             outState.putInt(SPINNER_SELECTION, orderingSpinner.getSelectedItemPosition());
         }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_movie_list, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int i = item.getItemId();
+        if (i == R.id.action_order_by) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

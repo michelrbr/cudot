@@ -64,7 +64,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         ActionBar mActionBar = getSupportActionBar();
 
         if (mActionBar != null) {
-            mActionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+            mActionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -218,7 +218,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
         _isFavorite = fav;
         if(_favoriteButton != null) {
-            int icon = (_isFavorite) ? R.drawable.ic_red_heart_24dp : R.drawable.ic_white_heart_24dp;
+            int icon = (_isFavorite) ? R.drawable.ic_heart_red_24dp : R.drawable.ic_heart_white_24dp;
             _favoriteButton.setIcon(icon);
         }
     }
