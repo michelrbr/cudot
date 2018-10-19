@@ -20,6 +20,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private Movie _movie;
 
     public MovieViewHolder(View itemView) {
+
         super(itemView);
     }
 

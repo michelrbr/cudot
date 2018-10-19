@@ -32,8 +32,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class MoviesActivity extends AppCompatActivity
-        implements
-        IMoviesView{
+        implements IMoviesView {
 
     private static final String SPINNER_SELECTION = "spinner_selection";
     //Views
@@ -58,6 +57,7 @@ public class MoviesActivity extends AppCompatActivity
     private boolean _loadMore;
     private int _currentSelection;
     private CompositeDisposable _subscriptions;
+    private MoviesAdapter _moviesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +145,7 @@ public class MoviesActivity extends AppCompatActivity
     @Override
     public void setEnableLoadMore(boolean enabled) {
         _loadMore = enabled;
+        _moviesAdapter.canLoadMore = _loadMore;
     }
 
     @Override
@@ -174,13 +175,13 @@ public class MoviesActivity extends AppCompatActivity
 
     private void setupView() {
 
-        MoviesAdapter moviesAdapter = new MoviesAdapter();
+        _moviesAdapter = new MoviesAdapter();
 
-        _subscriptions.add(moviesAdapter.asObservable().subscribe(this::showMovieDetails));
+        _subscriptions.add(_moviesAdapter.asObservable().subscribe(this::showMovieDetails));
 
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         moviesRecyclerView.setHasFixedSize(true);
-        moviesRecyclerView.setAdapter(moviesAdapter);
+        moviesRecyclerView.setAdapter(_moviesAdapter);
         moviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
