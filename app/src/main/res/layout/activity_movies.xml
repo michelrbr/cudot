@@ -6,25 +6,6 @@
     android:orientation="vertical"
     tools:context="br.com.mxel.cuedot.movies.MoviesActivity">
 
-    <LinearLayout
-        android:id="@+id/ordering_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/normal_margin"
-        android:orientation="horizontal"
-        android:gravity="end">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/normal_font"
-            android:textStyle="bold"
-            android:text="@string/order_by"/>
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/ordering_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
     <ProgressBar
         android:id="@+id/loading_progress"
         android:layout_width="wrap_content"

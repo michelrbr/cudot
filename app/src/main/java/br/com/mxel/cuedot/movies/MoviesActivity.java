@@ -1,9 +1,10 @@
 package br.com.mxel.cuedot.movies;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -28,7 +27,6 @@ import br.com.mxel.cuedot.util.CueDotConstants;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemSelected;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
@@ -40,12 +38,8 @@ public class MoviesActivity extends AppCompatActivity
     //Views
     @BindView(R.id.movies_recycler_view)
     RecyclerView moviesRecyclerView;
-    @BindView(R.id.ordering_spinner)
-    AppCompatSpinner orderingSpinner;
     @BindView(R.id.loading_progress)
     ProgressBar loadingProgress;
-    @BindView(R.id.ordering_view)
-    View orderingView;
     @BindView(R.id.error_text_view)
     AppCompatTextView errorTextView;
 
@@ -105,9 +99,8 @@ public class MoviesActivity extends AppCompatActivity
     public void onSaveInstanceState(Bundle outState) {
         _presenter.unbind();
 
-        if(orderingSpinner != null) {
-            outState.putInt(SPINNER_SELECTION, orderingSpinner.getSelectedItemPosition());
-        }
+        outState.putInt(SPINNER_SELECTION, _currentSelection);
+
         super.onSaveInstanceState(outState);
     }
 
@@ -123,6 +116,18 @@ public class MoviesActivity extends AppCompatActivity
 
         int i = item.getItemId();
         if (i == R.id.action_order_by) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.order_by);
+            builder.setItems(R.array.order_by_list, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    setCurrentOder(i);
+                    dialogInterface.dismiss();
+                }
+            });
+
+            builder.create().show();
 
             return true;
         }
@@ -158,7 +163,6 @@ public class MoviesActivity extends AppCompatActivity
 
         loadingProgress.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.VISIBLE);
-        orderingView.setVisibility(View.VISIBLE);
         errorTextView.setVisibility(View.VISIBLE);
     }
 
@@ -190,7 +194,6 @@ public class MoviesActivity extends AppCompatActivity
         errorTextView.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.VISIBLE);
         ((MoviesAdapter) moviesRecyclerView.getAdapter()).setData(movies);
-        //moviesRecyclerView.scrollToPosition(0);
     }
 
     private void setupView() {
@@ -212,14 +215,7 @@ public class MoviesActivity extends AppCompatActivity
             }
         });
 
-        ArrayAdapter orderAdapter = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_item,
-                orderArray);
-        orderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        orderingSpinner.setAdapter(orderAdapter);
-
-        orderingSpinner.setSelection(_currentSelection);
+        setCurrentOder(_currentSelection);
     }
 
     void showMovieDetails(Movie movie) {
@@ -242,8 +238,8 @@ public class MoviesActivity extends AppCompatActivity
         }
     }
 
-    @OnItemSelected(R.id.ordering_spinner)
-    void selectCurrentOrder(AdapterView<?> parent, View view, int position, long id) {
+    void setCurrentOder(int position) {
+
         String ordering = "";
         _currentSelection = position;
         switch (position) {
@@ -266,6 +262,8 @@ public class MoviesActivity extends AppCompatActivity
                 ordering = CueDotConstants.ORDER_BY_POPULAR;
                 break;
         }
+
+        setTitle(orderArray[_currentSelection]);
 
         if(!TextUtils.isEmpty(ordering)) {
             moviesRecyclerView.scrollToPosition(0);
