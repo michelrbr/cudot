@@ -117,7 +117,7 @@ public class MoviesActivity extends AppCompatActivity
         int i = item.getItemId();
         if (i == R.id.action_order_by) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppDialog);
             builder.setTitle(R.string.order_by);
             builder.setItems(R.array.order_by_list, new DialogInterface.OnClickListener() {
                 @Override

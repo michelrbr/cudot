@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/accentColor</item>
+        <item name="android:navigationBarColor">@color/primaryColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
     </style>
+
+    <style name="AppDialog" parent="Base.Theme.AppCompat.Dialog.Alert" />
 
 </resources>

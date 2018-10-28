@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primaryColor"
     tools:context="br.com.mxel.cuedot.movies.MoviesActivity">
 
     <ProgressBar
@@ -26,6 +27,7 @@
         android:id="@+id/movies_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/normal_margin"
         android:layout_marginStart="@dimen/normal_margin"
         android:layout_marginEnd="@dimen/normal_margin"/>
 </LinearLayout>
